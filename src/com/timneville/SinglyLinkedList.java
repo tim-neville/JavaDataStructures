@@ -1,9 +1,11 @@
 package com.timneville;
 
+import java.util.List;
+
 /**
  * Created by timneville on 31/5/17.
  */
-public class SinglyLinkedList<E> {
+public class SinglyLinkedList<E> /*implements List<E>*/ {
     //instance variables of SSL
     private Node<E> head = null;	//head and tail initially null.
     private Node<E> tail = null;
@@ -17,12 +19,12 @@ public class SinglyLinkedList<E> {
 
     public boolean isEmpty() { return size == 0; }
 
-    public E ElementAtFirstNode() {
+    public E elementAtFirstNode() {
         if (isEmpty()) return null;
         return head.getElement();
     }
 
-    public E ElementAtLastNode() {
+    public E elementAtLastNode() {
         if (isEmpty()) return null;
         return tail.getElement();
     }
@@ -67,16 +69,16 @@ public class SinglyLinkedList<E> {
     public E removeWithValue(E element) {
         E removedElement;
         if (isEmpty()) { return null; }
-        if (head.element == element) {              //if head is the one to be deleted
+        if (head.element.equals(element)) {              //if head is the one to be deleted
             removedElement = head.getElement();
             head = head.getNext();
             size--;
             return removedElement;
         }
-        Node currentNode = head;                        //starting at the head
+        Node<E> currentNode = head;                        //starting at the head
         while (currentNode.next != null) {              //while not at the tail of the list
-            if (currentNode.next.element == element) {	//if the next value is the one you want to delete,
-                removedElement = (E)currentNode.element;
+            if (currentNode.next.element.equals(element)) {	//if the next value is the one you want to delete,
+                removedElement = currentNode.element;
                 currentNode.next = currentNode.next.next;//then "walk around" the next element, cutting it out by setting current.next reference to next.next;
                 size--;
                 return removedElement;
@@ -87,7 +89,7 @@ public class SinglyLinkedList<E> {
     }
 
     //nested Node class
-    private class Node<E> {
+    private static class Node<E> {
         private E element;
         private Node<E> next;
 

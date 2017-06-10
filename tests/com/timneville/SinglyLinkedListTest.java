@@ -22,8 +22,8 @@ public class SinglyLinkedListTest {
 
         assertTrue("is empty", singlyLinkedList.isEmpty());
         assertEquals("size is zero",0, singlyLinkedList.getSize());
-        assertEquals("first node returns null", null, singlyLinkedList.ElementAtFirstNode());
-        assertEquals("last node returns null", null, singlyLinkedList.ElementAtLastNode());
+        assertEquals("first node returns null", null, singlyLinkedList.elementAtFirstNode());
+        assertEquals("last node returns null", null, singlyLinkedList.elementAtLastNode());
     }
 
     @Test
@@ -32,8 +32,8 @@ public class SinglyLinkedListTest {
         singlyLinkedList.addFirst(10);
 
         //Assert - assert what the result should be.
-        assertEquals("add First", 10, singlyLinkedList.ElementAtFirstNode());
-        assertEquals("tail also points to head", 10, singlyLinkedList.ElementAtLastNode());
+        assertEquals("add First", 10, singlyLinkedList.elementAtFirstNode());
+        assertEquals("tail also points to head", 10, singlyLinkedList.elementAtLastNode());
         assertFalse("is not empty after add", singlyLinkedList.isEmpty());
         assertEquals("size now 1", 1, singlyLinkedList.getSize());
     }
@@ -42,8 +42,8 @@ public class SinglyLinkedListTest {
     public void nodeAddToTail() throws Exception {
         singlyLinkedList.addLast(20);
 
-        assertEquals("added Last", 20, singlyLinkedList.ElementAtLastNode());
-        assertEquals("head also points to tail", 20, singlyLinkedList.ElementAtFirstNode());
+        assertEquals("added Last", 20, singlyLinkedList.elementAtLastNode());
+        assertEquals("head also points to tail", 20, singlyLinkedList.elementAtFirstNode());
         assertFalse("is not empty after add", singlyLinkedList.isEmpty());
         assertEquals("size now 1", 1, singlyLinkedList.getSize());
     }
@@ -56,7 +56,7 @@ public class SinglyLinkedListTest {
 
         assertEquals("remove and return First", 30, singlyLinkedList.removeFirst());
         assertEquals("size reduced by 1", 2, singlyLinkedList.getSize());
-        assertEquals("new head is as expected", 20, singlyLinkedList.ElementAtFirstNode());
+        assertEquals("new head is as expected", 20, singlyLinkedList.elementAtFirstNode());
     }
 
     @Test
@@ -68,25 +68,29 @@ public class SinglyLinkedListTest {
         assertEquals(3, singlyLinkedList.removeWithValue(3));
     }
 
-//    @Test
-//    public void removeWithValueTail() throws Exception {
-//        singlyLinkedList.addFirst(1);
-//        singlyLinkedList.addFirst(2);
-//        singlyLinkedList.addFirst(3);
-//        singlyLinkedList.removeWithValue(1);
-//
-//        assertEquals("last node as expected after remove value", 2, singlyLinkedList.ElementAtLastNode());
-//        assertEquals("first node as expected after remove value", 3, singlyLinkedList.ElementAtFirstNode());
-//    }
-//
-//    @Test
-//    public void removeWithValueReturnsAValue() throws Exception {
-//        singlyLinkedList.addFirst(1);
-//        singlyLinkedList.addFirst(2);
-//        singlyLinkedList.addFirst(3);
-//        singlyLinkedList.removeWithValue(2);
-//
-//        assertEquals("last node as expected after remove value", 1, singlyLinkedList.ElementAtLastNode());
-//        assertEquals("first node as expected after remove value", 3, singlyLinkedList.ElementAtFirstNode());
-//    }
+    @Test
+    public void removeWithValueTail() throws Exception {
+        singlyLinkedList.addFirst(1);
+        singlyLinkedList.addFirst(2);
+        singlyLinkedList.addFirst(3);
+        singlyLinkedList.removeWithValue(1);
+
+//        Object i1  = 7;
+//        Object i2  = new Integer(7);
+//        System.out.printf("i1 == i2 ? %b \ni1.equals(i2)? %b \n",i1 == i2, i1.equals(i2));
+
+        assertEquals("last node as expected after remove value", 2, singlyLinkedList.elementAtLastNode());
+        assertEquals("first node as expected after remove value", 3, singlyLinkedList.elementAtFirstNode());
+    }
+
+    @Test
+    public void itShouldRemoveWithValue() throws Exception {
+        singlyLinkedList.addFirst(1);
+        singlyLinkedList.addFirst(2);
+        singlyLinkedList.addFirst(3);
+        singlyLinkedList.removeWithValue(2);
+
+        assertEquals("last node as expected after remove value", 1, singlyLinkedList.elementAtLastNode());
+        assertEquals("first node as expected after remove value", 3, singlyLinkedList.elementAtFirstNode());
+    }
 }
