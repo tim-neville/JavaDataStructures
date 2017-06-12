@@ -66,19 +66,16 @@ public class SinglyLinkedList<E> /*implements List<E>*/ {
         return removedHead;
     }
 
-    public E removeWithValue(E element) {
-        E removedElement;
+    public E removeWithValue(E value) {
         if (isEmpty()) { return null; }
-        if (head.element.equals(element)) {              //if head is the one to be deleted
-            removedElement = head.getElement();
-            head = head.getNext();
-            size--;
-            return removedElement;
+        if (head.element.equals(value)) {              //if head is the one to be deleted
+            return removeFirst();
         }
+        E removedElement;
         Node<E> currentNode = head;                        //starting at the head
         while (currentNode.next != null) {              //while not at the tail of the list
-            if (currentNode.next.element.equals(element)) {	//if the next value is the one you want to delete,
-                removedElement = currentNode.element;
+            if (currentNode.next.element.equals(value)) {	//if the next value is the one you want to delete,
+                removedElement = currentNode.next.element;
                 currentNode.next = currentNode.next.next;//then "walk around" the next element, cutting it out by setting current.next reference to next.next;
                 size--;
                 return removedElement;

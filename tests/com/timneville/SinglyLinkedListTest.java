@@ -60,37 +60,28 @@ public class SinglyLinkedListTest {
     }
 
     @Test
-    public void removeWithValueTest() throws Exception {
+    public void removeHeadReturnsHead() throws Exception {
         singlyLinkedList.addFirst(1);//Tail
         singlyLinkedList.addFirst(2);
         singlyLinkedList.addFirst(3);//Head
 
         assertEquals(3, singlyLinkedList.removeWithValue(3));
+        assertEquals(2, singlyLinkedList.elementAtFirstNode());
+        assertEquals(1, singlyLinkedList.elementAtLastNode());
     }
 
     @Test
-    public void removeWithValueTail() throws Exception {
+    public void removeTailReturnsTail() throws Exception {
         singlyLinkedList.addFirst(1);
         singlyLinkedList.addFirst(2);
         singlyLinkedList.addFirst(3);
-        singlyLinkedList.removeWithValue(1);
 
 //        Object i1  = 7;
 //        Object i2  = new Integer(7);
 //        System.out.printf("i1 == i2 ? %b \ni1.equals(i2)? %b \n",i1 == i2, i1.equals(i2));
 
-        assertEquals("last node as expected after remove value", 2, singlyLinkedList.elementAtLastNode());
-        assertEquals("first node as expected after remove value", 3, singlyLinkedList.elementAtFirstNode());
-    }
-
-    @Test
-    public void itShouldRemoveWithValue() throws Exception {
-        singlyLinkedList.addFirst(1);
-        singlyLinkedList.addFirst(2);
-        singlyLinkedList.addFirst(3);
-        singlyLinkedList.removeWithValue(2);
-
-        assertEquals("last node as expected after remove value", 1, singlyLinkedList.elementAtLastNode());
-        assertEquals("first node as expected after remove value", 3, singlyLinkedList.elementAtFirstNode());
+        assertEquals(1, singlyLinkedList.removeWithValue(1));
+        assertEquals(3, singlyLinkedList.elementAtFirstNode());
+        assertEquals(2, singlyLinkedList.elementAtLastNode());
     }
 }
