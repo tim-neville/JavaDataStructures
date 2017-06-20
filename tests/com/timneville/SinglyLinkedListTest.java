@@ -27,12 +27,13 @@ public class SinglyLinkedListTest {
     }
 
     @Test
-    public void nodeAddToHeadOfEmptyList() throws Exception {
+    public void addNodeToHeadOfEmptyList() throws Exception {
+
         //Act - call the method you want to test
         singlyLinkedList.addFirst(10);
 
         //Assert - assert what the result should be.
-        assertEquals("add First", 10, singlyLinkedList.elementAtFirstNode());
+        assertEquals("first Node", 10, singlyLinkedList.elementAtFirstNode());
         assertEquals("tail also points to head", 10, singlyLinkedList.elementAtLastNode());
         assertFalse("is not empty after add", singlyLinkedList.isEmpty());
         assertEquals("size now 1", 1, singlyLinkedList.getSize());

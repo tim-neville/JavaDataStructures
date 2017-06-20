@@ -76,11 +76,11 @@ public class SinglyLinkedList<E> /*implements List<E>*/ {
         while (currentNode.next != null) {              //while not at the tail of the list
             if (currentNode.next.element.equals(value)) {	//if the next value is the one you want to delete,
                 removedElement = currentNode.next.element;
-                currentNode.next = currentNode.next.next;//then "walk around" the next element, cutting it out by setting current.next reference to next.next;
+                currentNode.setNext(currentNode.getNext().getNext());//then "walk around" the next element, cutting it out by setting current.next reference to next.next;
                 size--;
                 return removedElement;
             }
-            currentNode = currentNode.next;             //traverse the list
+            currentNode = currentNode.getNext();             //traverse the list
         }
         return  null;
     }
