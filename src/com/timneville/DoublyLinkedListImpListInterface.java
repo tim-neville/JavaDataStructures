@@ -1,14 +1,11 @@
 package com.timneville;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 /**
  * Created by timneville on 21/6/17.
  */
-public class ArrayListImplementList<E> implements List<E> {
+public class DoublyLinkedListImpListInterface<E> implements List {
 
     @Override
     public int size() {
@@ -26,7 +23,7 @@ public class ArrayListImplementList<E> implements List<E> {
     }
 
     @Override
-    public Iterator<E> iterator() {
+    public Iterator iterator() {
         return null;
     }
 
@@ -36,12 +33,7 @@ public class ArrayListImplementList<E> implements List<E> {
     }
 
     @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
-    }
-
-    @Override
-    public boolean add(E e) {
+    public boolean add(Object o) {
         return false;
     }
 
@@ -51,27 +43,12 @@ public class ArrayListImplementList<E> implements List<E> {
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
+    public boolean addAll(Collection c) {
         return false;
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<? extends E> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
+    public boolean addAll(int index, Collection c) {
         return false;
     }
 
@@ -81,22 +58,22 @@ public class ArrayListImplementList<E> implements List<E> {
     }
 
     @Override
-    public E get(int index) {
+    public Object get(int index) {
         return null;
     }
 
     @Override
-    public E set(int index, E element) {
+    public Object set(int index, Object element) {
         return null;
     }
 
     @Override
-    public void add(int index, E element) {
+    public void add(int index, Object element) {
 
     }
 
     @Override
-    public E remove(int index) {
+    public Object remove(int index) {
         return null;
     }
 
@@ -111,17 +88,37 @@ public class ArrayListImplementList<E> implements List<E> {
     }
 
     @Override
-    public ListIterator<E> listIterator() {
+    public ListIterator listIterator() {
         return null;
     }
 
     @Override
-    public ListIterator<E> listIterator(int index) {
+    public ListIterator listIterator(int index) {
         return null;
     }
 
     @Override
-    public List<E> subList(int fromIndex, int toIndex) {
+    public List subList(int fromIndex, int toIndex) {
         return null;
+    }
+
+    @Override
+    public boolean retainAll(Collection c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection c) {
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection c) {
+        return false;
+    }
+
+    @Override
+    public Object[] toArray(Object[] a) {
+        return new Object[0];
     }
 }
