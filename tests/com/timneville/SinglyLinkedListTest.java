@@ -61,9 +61,9 @@ public class SinglyLinkedListTest {
     }
 
     @Test
-    public void removeSpecificElement() throws Exception {
-        singlyLinkedList.addFirst(1);
-        singlyLinkedList.addFirst(2);//Tail
+    public void removeNotLastElement() throws Exception {
+        singlyLinkedList.addFirst(1);//Tail
+        singlyLinkedList.addFirst(2);
         singlyLinkedList.addFirst(3);//Head
 
 //        Object i1  = 7;
@@ -72,7 +72,19 @@ public class SinglyLinkedListTest {
 
         assertEquals("removed value is correct",2, singlyLinkedList.removeWithValue(2));
         assertEquals("first is 3",3, singlyLinkedList.getFirst());
-        assertEquals("last is 2",1, singlyLinkedList.getLast());
-        assertEquals(1, singlyLinkedList.getNextAfterHead());
+        assertEquals("last is 1",1, singlyLinkedList.getLast());
+        assertEquals("check if 2 is actually gone",1, singlyLinkedList.getNextAfterHead());
+    }
+
+    @Test
+    public void removeLastElement() throws Exception {
+        singlyLinkedList.addFirst(1);//Tail
+        singlyLinkedList.addFirst(2);
+        singlyLinkedList.addFirst(3);//Head
+
+        assertEquals("removed value is correct",1, singlyLinkedList.removeWithValue(1));
+        assertEquals("first is 3",3, singlyLinkedList.getFirst());
+        assertEquals("last is 1",1, singlyLinkedList.getLast());
+        assertEquals("check if 2 is actually gone",1, singlyLinkedList.getNextAfterHead());
     }
 }
