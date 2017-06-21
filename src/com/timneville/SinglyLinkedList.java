@@ -29,11 +29,6 @@ public class SinglyLinkedList<E> /*implements List<E>*/ {
         return tail.getElement();
     }
 
-    public E getNextAfterHead() {
-        if (isEmpty()) return null;
-        return head.next.getElement();
-    }
-
     //update methods
     public void addFirst(E element) {
         //create a new node & reference newNode to the current head
@@ -73,7 +68,7 @@ public class SinglyLinkedList<E> /*implements List<E>*/ {
 
     public E removeWithValue(E value) {
         if (isEmpty()) { return null; }
-        if (head.element.equals(value)) {              //if head is the one to be deleted
+        if (head.getElement().equals(value)) {              //if head is the one to be deleted
             return removeFirst();
         }
         E removedElement = null;
@@ -94,6 +89,12 @@ public class SinglyLinkedList<E> /*implements List<E>*/ {
             currentNode = currentNode.next;             //traverse the list
         }
         return removedElement;
+    }
+
+    public void clear() {
+        head = null;
+        tail = null;
+        size = 0;
     }
 
     //nested Node class

@@ -9,15 +9,18 @@ import java.util.ListIterator;
  * Created by timneville on 21/6/17.
  */
 public class SinglyLinkedListImpListInterface<E> implements List<E> {
+    private Node<E> head = null;
+    private Node<E> tail = null;
+    private int size = 0;
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
@@ -82,7 +85,14 @@ public class SinglyLinkedListImpListInterface<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        return null;
+        if (isEmpty()) return null;
+        if (index == 0) return head.getElement();
+
+        Node<E> currentNode = head;
+        for (int i = 0; i < index; i++) {
+            currentNode = currentNode.next;
+        }
+        return currentNode.getElement();
     }
 
     @Override
@@ -123,5 +133,20 @@ public class SinglyLinkedListImpListInterface<E> implements List<E> {
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
         return null;
+    }
+
+    //nested Node class
+    private static class Node<E> {
+        private E element;
+        private Node<E> next;
+
+        private Node(E element, Node<E> next){
+            this.element = element;
+            this.next = next;
+        }
+
+        private E getElement() { return element; }
+        private Node<E> getNext() { return next; }
+        private void setNext(Node<E> next) { this.next = next; }
     }
 }
