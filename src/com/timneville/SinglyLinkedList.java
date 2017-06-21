@@ -19,14 +19,19 @@ public class SinglyLinkedList<E> /*implements List<E>*/ {
 
     public boolean isEmpty() { return size == 0; }
 
-    public E elementAtFirstNode() {
+    public E getFirst() {
         if (isEmpty()) return null;
         return head.getElement();
     }
 
-    public E elementAtLastNode() {
+    public E getLast() {
         if (isEmpty()) return null;
         return tail.getElement();
+    }
+
+    public E getNextAfterHead() {
+        if (isEmpty()) return null;
+        return head.next.getElement();
     }
 
     //update methods
@@ -57,13 +62,13 @@ public class SinglyLinkedList<E> /*implements List<E>*/ {
     public E removeFirst() {
         //Indicate the new head; then remove the prior head and return it.
         if (isEmpty()) { return null; }
-        E removedHead = head.getElement();
+        E removedElement = head.getElement();
         head = head.getNext();
         size--;
         if (isEmpty()) {
             tail = head;
         }
-        return removedHead;
+        return removedElement;
     }
 
     public E removeWithValue(E value) {
@@ -71,18 +76,22 @@ public class SinglyLinkedList<E> /*implements List<E>*/ {
         if (head.element.equals(value)) {              //if head is the one to be deleted
             return removeFirst();
         }
-        E removedElement;
+        E removedElement = null;
         Node<E> currentNode = head;                        //starting at the head
+
         while (currentNode.next != null) {              //while not at the tail of the list
-            if (currentNode.next.element.equals(value)) {	//if the next value is the one you want to delete,
-                removedElement = currentNode.next.element;
-                currentNode.setNext(currentNode.getNext().getNext());//then "walk around" the next element, cutting it out by setting current.next reference to next.next;
+            if (currentNode.next.getElement().equals(value)) {	//if the next value is the one you want to delete,
+                removedElement = currentNode.next.getElement();
+                if (currentNode.next.next == null) {
+                    currentNode.next.setNext(null);
+                } else {
+                    currentNode.next.setNext(currentNode.next.next);//then "walk around" the next element, cutting it out by setting current.next reference to next.next;
+                }
                 size--;
-                return removedElement;
             }
-            currentNode = currentNode.getNext();             //traverse the list
+            currentNode = currentNode.next;             //traverse the list
         }
-        return  null;
+        return removedElement;
     }
 
     //nested Node class

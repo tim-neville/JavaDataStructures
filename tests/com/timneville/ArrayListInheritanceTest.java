@@ -26,6 +26,5 @@ public class ArrayListInheritanceTest {
         assertEquals("cars", testList.get(0));
         assertEquals(2, testList.indexOf("bikes"));
         assertEquals(3, testList.size());
-
     }
 }
