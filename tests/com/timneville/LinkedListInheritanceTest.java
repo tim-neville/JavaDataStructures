@@ -14,38 +14,17 @@ public class LinkedListInheritanceTest {
     @Before
     public void setUp() throws Exception {
         myList = new LinkedListInheritance<>();
-
     }
 
     @Test
-    public void addNewItem() throws Exception {
-        myList.add("Object 1");
-        myList.add("Object 2");
-        myList.add("Object 3");
-        myList.add("Object 4");
-        myList.add("Object 5");
+    public void addItems() throws Exception {
+        myList.add("cars");
+        myList.add("trucks");
+        myList.add("bikes");
 
-        assertEquals("Object 1", myList.getFirst());
-        assertEquals("Object 5", myList.getLast());
-        assertEquals("Object 1", myList.get(0));
-        assertEquals("Object 2", myList.get(1));
-        assertEquals("Object 3", myList.get(2));
-        assertEquals("Object 4", myList.get(3));
-        assertEquals("Object 5", myList.get(4));
-        assertEquals(5, myList.size());
+        assertEquals(true, myList.contains("cars"));
+        assertEquals("cars", myList.get(0));
+        assertEquals(2, myList.indexOf("bikes"));
+        assertEquals(3, myList.size());
     }
-
-    @Test
-    public void clearedListIsEmpty() throws Exception {
-        myList.add("Object 1");
-        myList.add("Object 2");
-        myList.add("Object 3");
-        myList.add("Object 4");
-        myList.add("Object 5");
-        myList.clear();
-
-        assertEquals(0, myList.size());
-        assertEquals(false, myList.contains("Object 3"));
-    }
-
 }
