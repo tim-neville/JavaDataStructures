@@ -1,9 +1,11 @@
 package com.timneville;
 
+import java.util.List;
+
 /**
  * Created by timneville on 21/6/17.
  */
-public class DoublyLinkedList<E> {
+public class DoublyLinkedList<E> /* implements List<E> */ {
     /** instance variables */
     private Node<E> header;
     private Node<E> trailer;
@@ -72,12 +74,6 @@ public class DoublyLinkedList<E> {
         size--;
         return node.getElement();
     }
-
-
-
-
-
-
 
 
 
