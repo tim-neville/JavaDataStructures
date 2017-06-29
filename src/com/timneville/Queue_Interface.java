@@ -3,6 +3,9 @@ package com.timneville;
 /**
  * Created by timneville on 29/6/17.
  */
+
+/** Queue ADT **/
+
 public interface Queue_Interface<E> {
     /**@return the number of elements in the stack**/
     int size();
