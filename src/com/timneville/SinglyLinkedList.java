@@ -15,7 +15,7 @@ public class SinglyLinkedList<E> /*implements List<E>*/ {
     public SinglyLinkedList() {} 	//Construct initially empty list.
 
     //access methods
-    public int getSize() { return size; }
+    public int size() { return size; }
 
     public boolean isEmpty() { return size == 0; }
 
