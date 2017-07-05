@@ -1,6 +1,7 @@
 package com.timneville.Lists;
 
 import java.util.List;
+import com.timneville.Node;
 
 /**
  * Created by timneville on 31/5/17.
@@ -74,19 +75,19 @@ public class SinglyLinkedList<E> /*implements List<E>*/ {
         E removedElement = null;
         Node<E> currentNode = head;                        //starting at the head
 
-        while (currentNode.next != null) {              //while not at the tail of the list
-            if (currentNode.next.getElement().equals(value)) {	//if the next value is the one you want to delete,
-                removedElement = currentNode.next.getElement();
-                if (currentNode.next.getNext() != null) {
-                    currentNode.setNext(currentNode.next.next);//then "walk around" the next element, cutting it out by setting current.next reference to next.next;
+        while (currentNode.getNext() != null) {              //while not at the tail of the list
+            if (currentNode.getNext().getElement().equals(value)) {	//if the next value is the one you want to delete,
+                removedElement = currentNode.getNext().getElement();
+                if (currentNode.getNext().getNext() != null) {
+                    currentNode.setNext(currentNode.getNext().getNext());//then "walk around" the next element, cutting it out by setting current.next reference to next.next;
                 } else {
-                    currentNode.next = null;
+                    currentNode.setNext(null);
                     tail = currentNode;
                     return removedElement;
                 }
                 size--;
             }
-            currentNode = currentNode.next;             //traverse the list
+            currentNode = currentNode.getNext();             //traverse the list
         }
         return removedElement;
     }
@@ -96,21 +97,6 @@ public class SinglyLinkedList<E> /*implements List<E>*/ {
         tail = null;
         size = 0;
     }
-
-    //nested Node class
-    private static class Node<E> {
-        private E element;
-        private Node<E> next;
-
-        private Node(E element, Node<E> next){
-            this.element = element;
-            this.next = next;
-        }
-
-        private E getElement() { return element; }
-        private Node<E> getNext() { return next; }
-        private void setNext(Node<E> next) { this.next = next; }
-    } //end nested Node class
 
 }
 

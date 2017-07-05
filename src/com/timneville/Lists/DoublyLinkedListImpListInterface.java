@@ -1,6 +1,7 @@
 package com.timneville.Lists;
 
 import java.util.*;
+import com.timneville.Node;
 
 /**
  * Created by timneville on 21/6/17.
