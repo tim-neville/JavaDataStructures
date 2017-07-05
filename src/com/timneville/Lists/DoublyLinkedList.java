@@ -1,4 +1,4 @@
-package com.timneville;
+package com.timneville.Lists;
 
 import java.util.List;
 
@@ -75,8 +75,6 @@ public class DoublyLinkedList<E> /* implements List<E> */ {
         return node.getElement();
     }
 
-
-
     //nested Node class
     private static class Node<E> {
         private E element;
@@ -88,6 +86,7 @@ public class DoublyLinkedList<E> /* implements List<E> */ {
             this.prev = prev;
             this.next = next;
         }
+
         private E getElement() { return element; }
         private Node<E> getPrev() { return prev; }
         private Node<E> getNext() { return next; }

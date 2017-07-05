@@ -1,18 +1,16 @@
-package com.timneville;
-
-import java.util.*;
+package com.timneville.Queues;
 
 /**
  * Created by timneville on 5/7/17.
  */
-public class Queue_DoubleEndedArrayQueue<E> implements Queue_DequeInterface<E> {
+public class DoubleEndedArray<E> implements DequeInterface<E> {
     private static final int CAPACITY = 1000;
     private int size = 0;
     private int front = 0;
     private E[] data;
 
-    public Queue_DoubleEndedArrayQueue() { this(CAPACITY); }
-    public Queue_DoubleEndedArrayQueue(int capacity) {
+    public DoubleEndedArray() { this(CAPACITY); }
+    public DoubleEndedArray(int capacity) {
         this.data = (E[]) new Object[capacity];
     }
 

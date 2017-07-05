@@ -1,4 +1,4 @@
-package com.timneville;
+package com.timneville.Stacks;
 
 /**
  * Created by timneville on 29/6/17.
@@ -15,14 +15,14 @@ package com.timneville;
  * Note-pop() setting data[top] to null not technically required, but assists Garbage Collection by removing reference
  */
 
-public class Stack_ArrayStack<E> implements Stack_Interface<E> {
+public class ArrayStack<E> implements StackInterface<E> {
     public static final int CAPACITY = 1000;
     private E[] data;
     private int top = -1;
-    public Stack_ArrayStack() {
+    public ArrayStack() {
         this(CAPACITY);
     }
-    public Stack_ArrayStack(int capacity) {   //... or construct with given capacity
+    public ArrayStack(int capacity) {   //... or construct with given capacity
         data = (E[]) new Object[capacity];
     }
 
@@ -38,7 +38,7 @@ public class Stack_ArrayStack<E> implements Stack_Interface<E> {
 
     @Override
     public void push(E element) throws IllegalStateException {
-        if (size() == data.length) throw new IllegalStateException("Stack is full");
+        if (size() == data.length) throw new IllegalStateException("Lists is full");
         data[++top] = element;
     }
 

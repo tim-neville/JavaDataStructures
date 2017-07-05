@@ -1,6 +1,6 @@
-package com.timneville;
+package com.timneville.Queues;
 
-import java.util.Queue;
+import com.timneville.Lists.SinglyLinkedList;
 
 /**
  * Created by timneville on 29/6/17.
@@ -14,11 +14,11 @@ import java.util.Queue;
  *  due to Node instantiation and initialization of a new node, as well as references stored for next node.
  *
  * */
-public class Queue_LinkedQueue<E> implements Queue_Interface<E> {
+public class LinkedQueue<E> implements QueueInterface<E> {
     /** Adaptor pattern **/
     private SinglyLinkedList<E> list = new SinglyLinkedList<>();
 
-    public Queue_LinkedQueue() {}
+    public LinkedQueue() {}
 
     @Override
     public int size() { return list.size(); }

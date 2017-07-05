@@ -1,12 +1,12 @@
-package com.timneville;
+package com.timneville.Stacks;
 
 /**
  * Created by timneville on 29/6/17.
  */
 
-/** Stack ADT */
+/** Lists ADT */
 
-public interface Stack_Interface<E> {
+public interface StackInterface<E> {
     /**@return the number of elements in the stack**/
     int size();
     /**@return true if the stack is empty**/

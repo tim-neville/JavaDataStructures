@@ -1,4 +1,4 @@
-package com.timneville;
+package com.timneville.Queues;
 
 /**
  * Created by timneville on 29/6/17.
@@ -6,7 +6,7 @@ package com.timneville;
 
 /** Queue ADT **/
 
-public interface Queue_Interface<E> {
+public interface QueueInterface<E> {
     /**@return the number of elements in the stack**/
     int size();
     /**@return true if the stack is empty**/

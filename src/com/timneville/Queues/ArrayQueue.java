@@ -1,4 +1,4 @@
-package com.timneville;
+package com.timneville.Queues;
 
 /**
  * Created by timneville on 29/6/17.
@@ -13,16 +13,16 @@ package com.timneville;
  *  For a fixed array length, when the end of the array is reached, enqueue wraps around and starts again at Index 0, but will be end of the queue.
  *
  * **/
-public class Queue_ArrayQueue<E> implements Queue_Interface<E> {
+public class ArrayQueue<E> implements QueueInterface<E> {
     public static final int CAPACITY = 1000;
     private E[] data;
     private int front = 0;
     private int size = 0;   //note is not size of the array itself. Serves a numberOfElements/sizeOfQueue and lastElement n-1.
 
-    public Queue_ArrayQueue() {
+    public ArrayQueue() {
         this(CAPACITY);
     }
-    public Queue_ArrayQueue(int capacity) {
+    public ArrayQueue(int capacity) {
         this.data = (E[]) new Object[capacity];
     }
 

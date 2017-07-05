@@ -1,4 +1,4 @@
-package com.timneville;
+package com.timneville.Lists;
 
 import java.util.List;
 
