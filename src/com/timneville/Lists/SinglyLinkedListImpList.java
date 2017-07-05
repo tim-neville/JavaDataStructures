@@ -26,7 +26,10 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     //Returns true if this list contains the specified element
     @Override
     public boolean contains(Object o) {
-        return iterator().equals(o);
+        while (iterator().hasNext()) {
+            return iterator().next().equals(o);
+        }
+        return false;
     }
 
     //Returns an iterator over the elements in this list in proper sequence.
@@ -50,7 +53,7 @@ public class SinglyLinkedListImpList<E> implements List<E> {
                     return currentNode.getElement();
                 }
                 if (currentNode.getNext() == null) {
-                    throw new NoSuchElementException();
+                    return null;
                 }
                 currentNode = currentNode.getNext();
                 return currentNode.getElement();
@@ -58,20 +61,38 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         };
     }
 
+    //Appends the specified element to the end of this list
     @Override
-    public Object[] toArray()
-    {
-        return new Object[0];
+    public boolean add(E element) {
+        Node<E> newNode = new Node<>(element, null);
+
+        if (isEmpty()) {
+            head = newNode;
+        } else {
+            tail.setNext(newNode);
+        }
+
+        tail = newNode;
+        size++;
+        return true;
     }
 
+    //Inserts the specified element at the specified position in this list
+    /** INCOMPLETE */
     @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
-    }
+    public void add(int index, E element) {
+        Node<E> newNode = new Node<>(element, null);
+        if (index > size) throw new IndexOutOfBoundsException();
+        if (isEmpty()) {
+            head = newNode;
+        } else {
+            tail.setNext(newNode);
+        }
 
-    @Override
-    public boolean add(E e) {
-        return false;
+        Node<E> currentNode = null;
+
+        tail = newNode;
+        size++;
     }
 
     @Override
@@ -106,7 +127,9 @@ public class SinglyLinkedListImpList<E> implements List<E> {
 
     @Override
     public void clear() {
-
+        head = null;
+        tail = null;
+        size = 0;
     }
 
     //Returns the element at the specified position in this list.
@@ -126,11 +149,6 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     @Override
     public E set(int index, E element) {
         return null;
-    }
-
-    @Override
-    public void add(int index, E element) {
-
     }
 
     @Override
@@ -163,4 +181,14 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         return null;
     }
 
+    @Override
+    public Object[] toArray()
+    {
+        return new Object[0];
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return null;
+    }
 }

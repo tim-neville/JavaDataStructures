@@ -21,10 +21,14 @@ public class LinkedQueue<E> implements QueueInterface<E> {
     public LinkedQueue() {}
 
     @Override
-    public int size() { return list.size(); }
+    public int size() {
+        return list.size();
+    }
 
     @Override
-    public boolean isEmpty() { return list.isEmpty(); }
+    public boolean isEmpty() {
+        return list.isEmpty();
+    }
 
     @Override
     public void enqueue(E element) {

@@ -21,17 +21,27 @@ public class LinkedStack<E> implements StackInterface<E> {
     public LinkedStack() {}
 
     @Override
-    public int size() { return list.size(); }
+    public int size() {
+        return list.size();
+    }
 
     @Override
-    public boolean isEmpty() { return list.isEmpty(); }
+    public boolean isEmpty() {
+        return list.isEmpty();
+    }
 
     @Override
-    public void push(E element) { list.addFirst(element); }
+    public void push(E element) {
+        list.addFirst(element);
+    }
 
     @Override
-    public E top() { return list.getFirst(); }
+    public E top() {
+        return list.getFirst();
+    }
 
     @Override
-    public E pop() { return list.removeFirst(); }
+    public E pop() {
+        return list.removeFirst();
+    }
 }

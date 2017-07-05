@@ -1,4 +1,4 @@
-package com.timneville;
+package com.timneville.Lists;
 
 import com.timneville.Lists.SinglyLinkedList;
 import org.junit.Before;
