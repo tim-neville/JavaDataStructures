@@ -6,7 +6,7 @@ import com.timneville.Node;
 /**
  * Created by timneville on 21/6/17.
  */
-public class DoublyLinkedListImpListInterface<E> implements List {
+public class DoublyLinkedListImpList<E> implements List {
 
     @Override
     public int size() {

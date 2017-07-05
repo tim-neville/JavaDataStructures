@@ -6,10 +6,12 @@ import com.timneville.Node;
 /**
  * Created by timneville on 21/6/17.
  */
-public class SinglyLinkedListImpListInterface<E> implements List<E> {
+public class SinglyLinkedListImpList<E> implements List<E> {
     private Node<E> head = null;
     private Node<E> tail = null;
     private int size = 0;
+
+    public SinglyLinkedListImpList() {}
 
     @Override
     public int size() {
@@ -21,12 +23,13 @@ public class SinglyLinkedListImpListInterface<E> implements List<E> {
         return size == 0;
     }
 
+    //Returns true if this list contains the specified element
     @Override
     public boolean contains(Object o) {
-        //Returns an iterator over the elements in this list in proper sequence.
-        return false;
+        return iterator().equals(o);
     }
 
+    //Returns an iterator over the elements in this list in proper sequence.
     @Override
     public Iterator<E> iterator() {
         if (isEmpty()) {
@@ -106,10 +109,12 @@ public class SinglyLinkedListImpListInterface<E> implements List<E> {
 
     }
 
+    //Returns the element at the specified position in this list.
     @Override
     public E get(int index) {
         if (isEmpty()) return null;
         if (index == 0) return head.getElement();
+        if (index == size-1) return tail.getElement();
 
         Node<E> currentNode = head;
         for (int i = 0; i < index; i++) {

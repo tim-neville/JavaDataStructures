@@ -47,5 +47,4 @@ public class SinglyLinkedListTest {
         assertEquals("first element as expected",2, singlyLinkedList.getFirst());
         assertEquals("last element as expected",1, singlyLinkedList.getLast());
     }
-
 }
