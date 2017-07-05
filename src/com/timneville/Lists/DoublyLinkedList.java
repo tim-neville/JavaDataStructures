@@ -1,6 +1,7 @@
 package com.timneville.Lists;
 
 import java.util.List;
+import com.timneville.Node;
 
 /**
  * Created by timneville on 21/6/17.
@@ -74,23 +75,4 @@ public class DoublyLinkedList<E> /* implements List<E> */ {
         size--;
         return node.getElement();
     }
-
-    //nested Node class
-    private static class Node<E> {
-        private E element;
-        private Node<E> prev;
-        private Node<E> next;
-
-        private Node(E element, Node<E> prev,Node<E> next){
-            this.element = element;
-            this.prev = prev;
-            this.next = next;
-        }
-
-        private E getElement() { return element; }
-        private Node<E> getPrev() { return prev; }
-        private Node<E> getNext() { return next; }
-        private void setPrev(Node<E> prev) { this.prev = prev; }
-        private void setNext(Node<E> next) { this.next = next; }
-    } //end nested Node class
 }

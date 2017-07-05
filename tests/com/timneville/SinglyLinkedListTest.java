@@ -18,7 +18,7 @@ public class SinglyLinkedListTest {
     }
 
     @Test
-    public void removeWithValueReturnsRemovedElement() throws Exception {
+    public void removeWithValue() throws Exception {
         singlyLinkedList.addFirst(1);//Tail
         singlyLinkedList.addFirst(2);//<---Removing Not Last
         singlyLinkedList.addFirst(3);//Head

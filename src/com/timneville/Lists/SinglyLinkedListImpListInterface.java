@@ -1,9 +1,7 @@
 package com.timneville.Lists;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
+import com.timneville.Node;
 
 /**
  * Created by timneville on 21/6/17.
@@ -25,12 +23,36 @@ public class SinglyLinkedListImpListInterface<E> implements List<E> {
 
     @Override
     public boolean contains(Object o) {
+        //Returns an iterator over the elements in this list in proper sequence.
         return false;
     }
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        if (isEmpty()) {
+            return Collections.<E>emptyList().iterator();
+        }
+        return new Iterator<E>() {
+            private Node<E> currentNode = null;
+
+            @Override //hasNext() - Returns true if there is at least one additional element in the sequence.
+            public boolean hasNext() {
+                return currentNode != tail;
+            }
+
+            @Override //next() Returns the next element in the sequence. throws NoSuchElementException
+            public E next() {
+                if (currentNode == null) {
+                    currentNode = head;
+                    return currentNode.getElement();
+                }
+                if (currentNode.getNext() == null) {
+                    throw new NoSuchElementException();
+                }
+                currentNode = currentNode.getNext();
+                return currentNode.getElement();
+            }
+        };
     }
 
     @Override
@@ -90,7 +112,7 @@ public class SinglyLinkedListImpListInterface<E> implements List<E> {
 
         Node<E> currentNode = head;
         for (int i = 0; i < index; i++) {
-            currentNode = currentNode.next;
+            currentNode = currentNode.getNext();
         }
         return currentNode.getElement();
     }
@@ -135,18 +157,4 @@ public class SinglyLinkedListImpListInterface<E> implements List<E> {
         return null;
     }
 
-    //nested Node class
-    private static class Node<E> {
-        private E element;
-        private Node<E> next;
-
-        private Node(E element, Node<E> next){
-            this.element = element;
-            this.next = next;
-        }
-
-        private E getElement() { return element; }
-        private Node<E> getNext() { return next; }
-        private void setNext(Node<E> next) { this.next = next; }
-    }
 }
