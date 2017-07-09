@@ -24,10 +24,10 @@ public class Node<E> {
         return element;
     }
     public Node<E> getPrev() {
-        return prev;
+            return prev;
     }
     public Node<E> getNext() {
-        return next;
+            return next;
     }
     public void setPrev(Node<E> prev) {
         this.prev = prev;

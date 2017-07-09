@@ -27,7 +27,12 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     @Override
     public boolean contains(Object o) {
         while (iterator().hasNext()) {
-            return iterator().next().equals(o);
+            E element = iterator().next();
+            if (iterator().next().equals(o)) {
+                return true;
+            } else {
+                return false;
+            }
         }
         return false;
     }
@@ -38,25 +43,23 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         if (isEmpty()) {
             return Collections.<E>emptyList().iterator();
         }
-        return new Iterator<E>() {
-            private Node<E> currentNode = null;
 
+        return new Iterator<E>() {
+            Node<E> currentNode;
             @Override //hasNext() - Returns true if there is at least one additional element in the sequence.
             public boolean hasNext() {
-                return currentNode != tail;
+                if (currentNode == null) {
+                    currentNode = head;
+                }
+                return currentNode.getNext() != null;
             }
 
             @Override //next() Returns the next element in the sequence. throws NoSuchElementException
             public E next() {
-                if (currentNode == null) {
-                    currentNode = head;
-                    return currentNode.getElement();
-                }
-                if (currentNode.getNext() == null) {
-                    return null;
-                }
+                if(!hasNext()) { return null; }
+                E answer = currentNode.getElement();
                 currentNode = currentNode.getNext();
-                return currentNode.getElement();
+                return answer;
             }
         };
     }
@@ -71,27 +74,34 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         } else {
             tail.setNext(newNode);
         }
-
         tail = newNode;
         size++;
         return true;
     }
 
     //Inserts the specified element at the specified position in this list
-    /** INCOMPLETE */
     @Override
     public void add(int index, E element) {
+        int indexCounter = 0;
+        Node<E> currentNode = head;
         Node<E> newNode = new Node<>(element, null);
-        if (index > size) throw new IndexOutOfBoundsException();
+        Node<E> newNodeNext = null;
+
         if (isEmpty()) {
             head = newNode;
+            tail = newNode;
         } else {
-            tail.setNext(newNode);
+            if (index > size-1) throw new IndexOutOfBoundsException();
+            for (int i = 0; i < index; i++) {
+                currentNode = currentNode.getNext();             //traverse the list to one before the index location
+                indexCounter++;
+            }
+            if (currentNode.getNext() != null) {
+                newNodeNext = currentNode.getNext();
+            }
+            currentNode.setNext(newNode);
+            newNode.setNext(newNodeNext);
         }
-
-        Node<E> currentNode = null;
-
-        tail = newNode;
         size++;
     }
 

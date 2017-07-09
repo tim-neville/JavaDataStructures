@@ -19,17 +19,17 @@ public class SinglyLinkedListImpListTest {
     }
 
     @Test
-    public void contains() throws Exception {
+    public void containsElementsAfterAdding() throws Exception {
         myList.add("Bike");
         myList.add("Dog");
 
-        assertEquals(true, myList.contains("Bike"));
+        assertEquals("contains Bike test", true, myList.contains("Bike"));
         assertEquals(false, myList.contains("Cat"));
         assertEquals(2, myList.size());
     }
 
     @Test
-    public void iteratorEmptyList() throws Exception {
+    public void iteratorOnEmptyListDoesNotHaveNext() throws Exception {
         assertEquals(false, myList.iterator().hasNext());
     }
 
@@ -40,6 +40,18 @@ public class SinglyLinkedListImpListTest {
 
         assertEquals("Bike", myList.iterator().next());
         assertFalse(myList.iterator().next() == "Dog");
-
     }
+
+    @Test
+    public void listContainsElementsAfterAddAtIndex() throws Exception {
+        myList.add("Frogs");
+        myList.add("Logs");
+        myList.add("Planes");
+        myList.add("Trains");
+        //myList.add(1, "Dogs");
+
+        //assertEquals("testAtIndex Dogs",true, myList.contains("Dogs"));
+        assertEquals("testAdd Planes", true, myList.contains("Planes"));
+    }
+
 }
