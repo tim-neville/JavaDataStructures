@@ -13,6 +13,15 @@ public class SinglyLinkedListImpList<E> implements List<E> {
 
     public SinglyLinkedListImpList() {}
 
+
+    /**
+     * IMPLEMENT ME
+     *
+     * */
+    public SinglyLinkedListImpList(String[] elements) {
+        throw new IllegalStateException("String was not passed in.");
+    }
+
     @Override
     public int size() {
         return size;
