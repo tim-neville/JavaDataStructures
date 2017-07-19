@@ -5,8 +5,10 @@ package com.timneville.Lists;
  */
 
 /** A simplified version of the java.util.List interface. */
-public interface ListInterfaceADT<E> {
+/** Abstract because it doesn't specify HOW the ADT is implemented. ADT can have multiple different implementations */
+public interface ListADT<E> {
 
+    //note how all methods, when specified in an, interface dont require access modifiers as they must all be public
     int size();
 
     boolean isEmpty();

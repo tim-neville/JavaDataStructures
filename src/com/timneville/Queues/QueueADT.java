@@ -6,7 +6,7 @@ package com.timneville.Queues;
 
 /** Queue ADT **/
 
-public interface QueueInterfaceADT<E> {
+public interface QueueADT<E> {
     /**@return the number of elements in the stack**/
     int size();
     /**@return true if the stack is empty**/

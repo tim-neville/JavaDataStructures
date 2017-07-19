@@ -15,7 +15,7 @@ package com.timneville.Stacks;
  * Note-pop() setting data[top] to null not technically required, but assists Garbage Collection by removing reference
  */
 
-public class ArrayStack<E> implements StackInterfaceADT<E> {
+public class ArrayStack<E> implements StackADT<E> {
     public static final int CAPACITY = 1000;
     private E[] data;
     private int top = -1;

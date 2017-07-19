@@ -3,7 +3,7 @@ package com.timneville.Queues;
 /**
  * Created by timneville on 5/7/17.
  */
-public interface DequeInterfaceADT<E> {
+public interface DequeADT<E> {
     /** Returns the number of elements in the deque */
     int size();
     /** Returns a boolean indicating whether the deque is empty */

@@ -4,7 +4,7 @@ package com.timneville.Stacks;
  * Created by timneville on 29/6/17.
  */
 
-public interface StackInterfaceADT<E> {
+public interface StackADT<E> {
     /**@return the number of elements in the stack**/
     int size();
     /**@return true if the stack is empty**/

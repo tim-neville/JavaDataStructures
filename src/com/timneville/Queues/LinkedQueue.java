@@ -14,7 +14,7 @@ import com.timneville.Lists.SinglyLinkedList;
  *  due to Node instantiation and initialization of a new node, as well as references stored for next node.
  *
  * */
-public class LinkedQueue<E> implements QueueInterfaceADT<E> {
+public class LinkedQueue<E> implements QueueADT<E> {
     /** Adaptor pattern **/
     private SinglyLinkedList<E> list = new SinglyLinkedList<>();
 

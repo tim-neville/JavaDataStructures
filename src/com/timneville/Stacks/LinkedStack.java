@@ -15,7 +15,7 @@ import com.timneville.Lists.SinglyLinkedList;
  *  due to Node instantiation and initialization of a new node, as well as references stored for next node.
  */
 
-public class LinkedStack<E> implements StackInterfaceADT<E> {
+public class LinkedStack<E> implements StackADT<E> {
     /** Adaptor pattern **/
     private SinglyLinkedList<E> list = new SinglyLinkedList<>();
     public LinkedStack() {}
