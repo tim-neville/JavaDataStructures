@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import java.util.List;
-
+/**
 @RunWith(Suite.class)
 
 @Suite.SuiteClasses({
@@ -20,6 +20,13 @@ import java.util.List;
 /**
  * Created by timneville on 17/7/17.
  */
+
+
+/** Google Guava Testlib - testsuite that tests the behavior of Set, List and Map implementations.
+ * Specify which features your collections support. Runs through hundreds of tests Google has written. */
+
+
+/**
 public class GuavaTestSuite {
 
     public static class GuavaTest {
@@ -49,3 +56,5 @@ public class GuavaTestSuite {
         }
     }
 }
+
+*/

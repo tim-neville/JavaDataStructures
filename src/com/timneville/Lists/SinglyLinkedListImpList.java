@@ -17,7 +17,7 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     /**
      * IMPLEMENT ME
      * */
-    public SinglyLinkedListImpList(String[] elements) throws Exception {
+    public SinglyLinkedListImpList(String[] elements) throws IllegalStateException {
         throw new IllegalStateException("String array was not passed in.");
     }
 
@@ -34,15 +34,16 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     //Returns true if this list contains the specified element
     @Override
     public boolean contains(Object o) {
-        while (iterator().hasNext()) {
-            E element = iterator().next();
-            if (iterator().next().equals(o)) {
+        Iterator<E> listIterator = iterator();
+        while (listIterator.hasNext()) {
+            E element = listIterator.next();
+            if (element.equals(o)) {
                 return true;
-            } else {
-                return false;
             }
         }
-        return false;
+        return tail.getElement().equals(o); //false;
+
+//        return indexOf(o) != -1;
     }
 
     //Returns an iterator over the elements in this list in proper sequence.
@@ -54,7 +55,8 @@ public class SinglyLinkedListImpList<E> implements List<E> {
 
         return new Iterator<E>() {
             Node<E> currentNode;
-            @Override //hasNext() - Returns true if there is at least one additional element in the sequence.
+
+            @Override
             public boolean hasNext() {
                 if (currentNode == null) {
                     currentNode = head;
@@ -62,9 +64,9 @@ public class SinglyLinkedListImpList<E> implements List<E> {
                 return currentNode.getNext() != null;
             }
 
-            @Override //next() Returns the next element in the sequence. throws NoSuchElementException
+            @Override
             public E next() {
-                if(!hasNext()) { return null; }
+                if(!hasNext()) { return tail.getElement(); }
                 E answer = currentNode.getElement();
                 currentNode = currentNode.getNext();
                 return answer;
@@ -91,7 +93,6 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     //an error is thrown if index is not in range [0, size()]
     @Override
     public void add(int index, E element) {
-        int indexCounter = 0;
         Node<E> currentNode = head;
         Node<E> newNode = new Node<>(element, null);
         Node<E> newNodeNext = null;
@@ -103,7 +104,6 @@ public class SinglyLinkedListImpList<E> implements List<E> {
             if (index > size-1) throw new IndexOutOfBoundsException();
             for (int i = 0; i < index; i++) {
                 currentNode = currentNode.getNext();             //traverse the list to one before the index location
-                indexCounter++;
             }
             if (currentNode.getNext() != null) {
                 newNodeNext = currentNode.getNext();
@@ -116,6 +116,30 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     
     @Override
     public boolean remove(Object o) {
+        if (isEmpty()) { return false; }
+        if (head.getElement().equals(o)) {
+            head = head.getNext();
+            size--;
+            if (isEmpty()) {
+                tail = head;
+            }
+            return true;
+        }
+
+        Node<E> currentNode = head;
+        while (currentNode.getNext() != null) {
+            if (currentNode.getNext().getElement().equals(o)) {
+                if (currentNode.getNext().getNext() != null) {
+                    currentNode.setNext(currentNode.getNext().getNext());
+                } else {
+                    currentNode.setNext(null);
+                    tail = currentNode;
+                    return true;
+                }
+                size--;
+            }
+            currentNode = currentNode.getNext();             //traverse the list
+        }
         return false;
     }
 
@@ -182,7 +206,17 @@ public class SinglyLinkedListImpList<E> implements List<E> {
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        Node currentNode = head;
+        int index = 0;
+        while (currentNode != null) {
+                if (currentNode.getElement().equals(o)) {
+                    return index;
+                }
+            index++;
+            currentNode = currentNode.getNext();
+        }
+        // if o is not in the list return -1
+        return -1;
     }
 
     @Override
@@ -215,4 +249,6 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     public <T> T[] toArray(T[] a) {
         return null;
     }
+
+
 }
