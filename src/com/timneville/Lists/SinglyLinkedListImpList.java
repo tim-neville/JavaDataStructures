@@ -16,10 +16,9 @@ public class SinglyLinkedListImpList<E> implements List<E> {
 
     /**
      * IMPLEMENT ME
-     *
      * */
-    public SinglyLinkedListImpList(String[] elements) {
-        throw new IllegalStateException("String was not passed in.");
+    public SinglyLinkedListImpList(String[] elements) throws Exception {
+        throw new IllegalStateException("String array was not passed in.");
     }
 
     @Override
@@ -88,7 +87,8 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         return true;
     }
 
-    //Inserts the specified element at the specified position in this list
+    //Inserts a new element at the specified index in the list, moving all subsequent elements one index later in the list
+    //an error is thrown if index is not in range [0, size()]
     @Override
     public void add(int index, E element) {
         int indexCounter = 0;
@@ -113,7 +113,7 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         }
         size++;
     }
-
+    
     @Override
     public boolean remove(Object o) {
         return false;
@@ -151,7 +151,8 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         size = 0;
     }
 
-    //Returns the element at the specified position in this list.
+    //Returns the element at the specified index in the list.
+    //an error is thrown if index is not in range [0, size()-1]
     @Override
     public E get(int index) {
         if (isEmpty()) return null;
@@ -165,11 +166,15 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         return currentNode.getElement();
     }
 
+    //Replaces the element at index with a different element
+    //Error is thrown if index is not in range [0, size()-1]
     @Override
     public E set(int index, E element) {
         return null;
     }
 
+    //Removes and returns the element at index, moving all subsequent elements one index earlier in the list
+    //An error is thrown if inext is not in range [0, size()-1]
     @Override
     public E remove(int index) {
         return null;

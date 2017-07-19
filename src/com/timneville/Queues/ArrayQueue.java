@@ -13,7 +13,7 @@ package com.timneville.Queues;
  *  For a fixed array length, when the end of the array is reached, enqueue wraps around and starts again at Index 0, but will be end of the queue.
  *
  * **/
-public class ArrayQueue<E> implements QueueInterface<E> {
+public class ArrayQueue<E> implements QueueInterfaceADT<E> {
     public static final int CAPACITY = 1000;
     private E[] data;
     private int front = 0;

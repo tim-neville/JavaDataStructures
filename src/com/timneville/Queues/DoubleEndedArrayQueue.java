@@ -3,7 +3,7 @@ package com.timneville.Queues;
 /**
  * Created by timneville on 5/7/17.
  */
-public class DoubleEndedArrayQueue<E> implements DequeInterface<E> {
+public class DoubleEndedArrayQueue<E> implements DequeInterfaceADT<E> {
     private static final int CAPACITY = 1000;
     private int size = 0;
     private int front = 0;
