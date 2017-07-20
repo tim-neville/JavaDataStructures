@@ -23,12 +23,17 @@ public class Node<E> {
     public E getElement() {
         return element;
     }
+    public void setElement(E element) {
+        this.element = element;
+    }
     public Node<E> getPrev() {
             return prev;
     }
     public Node<E> getNext() {
             return next;
     }
+
+
     public void setPrev(Node<E> prev) {
         this.prev = prev;
     }

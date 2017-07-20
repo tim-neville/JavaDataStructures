@@ -210,14 +210,46 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     //Error is thrown if index is not in range [0, size()-1]
     @Override
     public E set(int index, E element) {
-        return null;
+        if (isEmpty()) return null;
+        if (index > size()-1) throw new IndexOutOfBoundsException("Index out of bounds");
+        if (index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
+        E removedElement;
+        if (index == 0) {
+            removedElement = head.getElement();
+            head.setElement(element);
+            return removedElement;
+        }
+
+        Node<E> currentNode = head;
+        for (int i = 0; i <= index; i++) {
+            currentNode = currentNode.getNext();
+        }
+        removedElement = currentNode.getElement();
+        currentNode.setElement(element);
+        return removedElement;
     }
 
     //Removes and returns the element at index, moving all subsequent elements one index earlier in the list
-    //An error is thrown if inext is not in range [0, size()-1]
+    //An error is thrown if index is not in range [0, size()-1]
     @Override
     public E remove(int index) {
-        return null;
+        if (isEmpty()) return null;
+        if (index > size()-1) throw new IndexOutOfBoundsException("Index out of bounds");
+        if (index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
+        E removedElement;
+        if (index == 0) {
+            removedElement = head.getElement();
+            head = head.getNext();
+            return removedElement;
+        }
+
+        Node<E> currentNode = head;
+        for (int i = 0; i < index; i++) {
+            currentNode = currentNode.getNext();
+        }
+        removedElement = currentNode.getNext().getElement();
+        currentNode.setNext(currentNode.getNext());
+        return removedElement;
     }
 
     @Override
