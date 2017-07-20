@@ -17,8 +17,9 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     /**
      * IMPLEMENT ME
      * */
-    public SinglyLinkedListImpList(String[] elements) throws IllegalStateException {
-        throw new IllegalStateException("String array was not passed in.");
+    public SinglyLinkedListImpList(E[] elements) throws IllegalStateException {
+        //throw new IllegalStateException("String array was not passed in.");
+        addAll(Arrays.asList(elements));
     }
 
     @Override
@@ -149,8 +150,11 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) {
-        return false;
+    public boolean addAll(Collection<? extends E> collection) {
+        for (E element : collection) {
+           add(element);
+        }
+        return true;
     }
 
     @Override
