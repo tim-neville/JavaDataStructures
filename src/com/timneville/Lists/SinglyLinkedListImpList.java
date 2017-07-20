@@ -175,12 +175,19 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     }
 
     @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
+    public boolean removeAll(Collection<?> collection) {
+        boolean didRemove = false;
+        for (Object element : collection) {
+            if (this.contains(element)) {
+                remove(this.indexOf(element));
+                didRemove = true;
+            }
+        }
+        return didRemove;
     }
 
     @Override
-    public boolean retainAll(Collection<?> c) {
+    public boolean retainAll(Collection<?> collection) {
         return false;
     }
 
@@ -268,8 +275,20 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     }
 
     @Override
-    public int lastIndexOf(Object o) {
-        return 0;
+    public int lastIndexOf(Object object) {
+        if (!this.contains(object)) {
+            return -1;
+        }
+        int index = 0;
+        Node currentNode = head;
+        while (currentNode != null) {
+            if (currentNode.getElement().equals(object)) {
+                index++;
+            }
+            currentNode = currentNode.getNext();
+        }
+        // if o is not in the list return -1
+        return index;
     }
 
     @Override
@@ -288,9 +307,14 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     }
 
     @Override
-    public Object[] toArray()
-    {
-        return new Object[0];
+    public Object[] toArray() {
+        Object[] returnedArray = new Object[size()];
+        Node currentNode = head;
+        for (Object element: returnedArray) {
+            element = currentNode.getElement();
+            currentNode = currentNode.getNext();
+        }
+        return returnedArray;
     }
 
     @Override
