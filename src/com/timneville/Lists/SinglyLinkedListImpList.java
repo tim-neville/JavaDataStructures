@@ -146,7 +146,16 @@ public class SinglyLinkedListImpList<E> implements List<E> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+
+        Iterator<?> specifiedCollection = c.iterator();
+        while (specifiedCollection.hasNext()) {
+            Object element = specifiedCollection.next();
+            if (this.contains(element)) {
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
