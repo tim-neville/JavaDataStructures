@@ -116,9 +116,9 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     }
     
     @Override
-    public boolean remove(Object o) {
+    public boolean remove(Object object) {
         if (isEmpty()) { return false; }
-        if (head.getElement().equals(o)) {
+        if (head.getElement().equals(object)) {
             head = head.getNext();
             size--;
             if (isEmpty()) {
@@ -129,7 +129,7 @@ public class SinglyLinkedListImpList<E> implements List<E> {
 
         Node<E> currentNode = head;
         while (currentNode.getNext() != null) {
-            if (currentNode.getNext().getElement().equals(o)) {
+            if (currentNode.getNext().getElement().equals(object)) {
                 if (currentNode.getNext().getNext() != null) {
                     currentNode.setNext(currentNode.getNext().getNext());
                 } else {
@@ -145,9 +145,9 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
+    public boolean containsAll(Collection<?> collection) {
 
-        Iterator<?> specifiedCollection = c.iterator();
+        Iterator<?> specifiedCollection = collection.iterator();
         while (specifiedCollection.hasNext()) {
             Object element = specifiedCollection.next();
             if (this.contains(element)) {
@@ -167,7 +167,10 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends E> c) {
+    public boolean addAll(int index, Collection<? extends E> collection) {
+        for (E element : collection) {
+            add(index, element);
+        }
         return false;
     }
 
