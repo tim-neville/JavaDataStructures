@@ -177,9 +177,12 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     @Override
     public boolean removeAll(Collection<?> collection) {
         boolean didRemove = false;
-        for (Object element : collection) {
-            if (this.contains(element)) {
-                remove(this.indexOf(element));
+
+        Iterator<E> collectionIterator = (Iterator<E>) collection.iterator();
+        while (collectionIterator.hasNext()) {
+            Object currentElement = collectionIterator.next();
+            if (indexOf(currentElement) != -1) {
+                remove(currentElement);
                 didRemove = true;
             }
         }
@@ -295,6 +298,70 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     public ListIterator<E> listIterator() {
         return null;
     }
+
+//    @Override
+//    public ListIterator<E> listIterator() {
+//        if (isEmpty()) {
+//            return Collections.<E>emptyList().listIterator();
+//        }
+//
+//        return new ListIterator<E>() {
+//            int currentIndex = 0;
+//            Node<E> currentNode;
+//
+//            /** add at front?*/
+//            @Override
+//            public void add(E element) {
+//                currentNode = new Node<E>(element, head);
+//                head = currentNode;
+//            }
+//
+//            @Override
+//            public boolean hasNext() {
+//                if (currentNode == null) {
+//                    currentNode = head;
+//                }
+//                return currentNode.getNext() != null;
+//            }
+//
+//            @Override
+//            public boolean hasPrevious() {
+//                return false;
+//            }
+//
+//            @Override
+//            public E next() {
+//                return null;
+//            }
+//
+//            @Override
+//            public int nextIndex() {
+//                return currentIndex+1;
+//            }
+//
+//            @Override
+//            public E previous() {
+//                return null;
+//            }
+//
+//            @Override
+//            public int previousIndex() {
+//                return 0;
+//            }
+//
+//            @Override
+//            public void remove() {
+//
+//            }
+//
+//            @Override
+//            public void set(E e) {
+//
+//            }
+//        };
+//    }
+
+
 
     @Override
     public ListIterator<E> listIterator(int index) {
