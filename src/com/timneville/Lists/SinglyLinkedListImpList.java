@@ -133,7 +133,7 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
     @Override
     public boolean containsAll(Collection<?> collection) throws NullPointerException {
-        if (collection == null) {
+        if (collection.equals(null)) {
             throw new NullPointerException("Collection not passed in");
         }
 
@@ -151,6 +151,9 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
     @Override
     public boolean addAll(Collection<? extends E> collection) {
+        if (collection.contains(null) || collection.equals(null)) {
+            return false;
+        }
         for (E element : collection) {
            add(element);
         }
@@ -159,6 +162,9 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> collection) {
+        if (collection.contains(null) || collection.equals(null)) {
+            return false;
+        }
         for (E element : collection) {
             add(index, element);
         }
