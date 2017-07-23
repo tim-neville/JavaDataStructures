@@ -45,17 +45,17 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
     //Returns true if this list contains the specified element
     @Override
-    public boolean contains(Object o) {
-        Iterator<E> iterator = iterator();
-        while (iterator.hasNext()) {
-            E element = iterator.next();
-            if (element.equals(o)) {
-                return true;
-            }
-        }
-        return tail.getElement().equals(o); //tail was getting missed so final check is if tail is equal to object passed in
+    public boolean contains(Object object) {
+//        Iterator<E> iterator = iterator();
+//        while (iterator.hasNext()) {
+//            E element = iterator.next();
+//            if (element.equals(o)) {
+//                return true;
+//            }
+//        }
+//        return tail.getElement().equals(o); //tail was getting missed so final check is if tail is equal to object passed in
 
-//        return indexOf(o) != -1;
+        return indexOf(object) != -1;
     }
 
     //Appends the specified element to the end of this list
@@ -127,9 +127,17 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         return false;
     }
 
-    @Override
-    public boolean containsAll(Collection<?> collection) {
+    /**
+     * Returns true if this collection contains all of the elements in the specified collection.
+     * */
 
+    @Override
+    public boolean containsAll(Collection<?> collection) throws NullPointerException {
+        if (collection == null) {
+            throw new NullPointerException("Collection not passed in");
+        }
+
+        //collection passed in is of type Collection interface, therefore adheres to collection interface required methods.
         Iterator<?> specifiedCollection = collection.iterator();
         while (specifiedCollection.hasNext()) {
             Object element = specifiedCollection.next();
@@ -248,11 +256,11 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
     }
 
     @Override
-    public int indexOf(Object o) {
+    public int indexOf(Object object) {
         Node currentNode = head;
         int index = 0;
         while (currentNode != null) {
-                if (currentNode.getElement().equals(o)) {
+                if (currentNode.getElement().equals(object)) {
                     return index;
                 }
             index++;
