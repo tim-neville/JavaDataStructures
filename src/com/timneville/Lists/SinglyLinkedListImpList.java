@@ -306,7 +306,7 @@ public class SinglyLinkedListImpList<E> implements List<E> {
 
     @Override
     public ListIterator<E> listIterator(int index) {
-        return new MyListIterator();
+        return new MyListIterator(index);
     }
 
     @Override
@@ -330,12 +330,26 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         return null;
     }
 
+    /** Nested listIterator */
     private class MyListIterator implements ListIterator<E> {
         private Node<E> prevNode;
         private Node<E> nextNode;
         private int nextIndex = 0;
         private int prevIndex = -1;
         private Node<E> currentlySelectedNode;
+
+        public MyListIterator() {}
+
+        public MyListIterator(int index) {
+            this.nextIndex = index+1;
+            this.prevIndex = index-1;
+
+            nextNode = head;
+            for (int i = 0; i < index; i++) {
+                prevNode = nextNode;
+                nextNode = nextNode.getNext();
+            }
+        }
 
         /** Inserts element into the list before implicit cursor. A call to previous would return the new element
          * (i.e. this call increments nextIndex and prevIndex */

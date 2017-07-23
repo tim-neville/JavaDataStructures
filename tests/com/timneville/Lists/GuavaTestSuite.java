@@ -33,9 +33,9 @@ public class GuavaTestSuite {
                 .named("My List Tests")
                 // Here we give a hit what features our collection supports
                 .withFeatures(ListFeature.GENERAL_PURPOSE,
-//                        CollectionFeature.ALLOWS_NULL_VALUES,
-//                        CollectionFeature.SERIALIZABLE,
-//                        CollectionFeature.FAILS_FAST_ON_CONCURRENT_MODIFICATION,
+                        CollectionFeature.ALLOWS_NULL_VALUES,
+                        CollectionFeature.SERIALIZABLE,
+                        CollectionFeature.FAILS_FAST_ON_CONCURRENT_MODIFICATION,
                         CollectionSize.ANY)
                 .createTestSuite();
     }
