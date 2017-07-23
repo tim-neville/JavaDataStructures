@@ -13,7 +13,7 @@ public class ArrayList<E> implements List<E> {
     private E[] data;
     private int size = 0;
 
-    public ArrayList(int capacity) {
+    public ArrayList() {
         this.capacity = capacity;
     }
 

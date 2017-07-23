@@ -351,8 +351,16 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        if (fromIndex > size()-1 || fromIndex < 0) throw new IndexOutOfBoundsException("Index out of bounds");
-        return null;
+        if (fromIndex > size() || fromIndex < 0) throw new IndexOutOfBoundsException("Index out of bounds");
+
+        List<E> subList = new ArrayList();
+        ListIterator<E> subListIterator = listIterator(fromIndex);
+        while (subListIterator.hasNext() && (fromIndex < toIndex)) {
+            subList.add(get(fromIndex));
+            fromIndex++;
+        }
+
+        return subList;
     }
 
     @Override
