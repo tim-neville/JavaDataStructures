@@ -76,8 +76,13 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
     //Inserts a new element at the specified index in the list, moving all subsequent elements one index later in the list
     //an error is thrown if index is not in range [0, size()]
     @Override
-    public void add(int index, E element) throws IndexOutOfBoundsException {
-        if (index > size()-1 || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
+    public void add(int index, E element) throws IndexOutOfBoundsException, NullPointerException {
+        if (element == null) {
+            throw new NullPointerException("null passed as element");
+        }
+        if (index > size()-1 || index < 0) {
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        }
 
         Node<E> currentNode = head;
         Node<E> newNode = new Node<>(element, null);
@@ -134,7 +139,7 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
     @Override
     public boolean containsAll(Collection<?> collection) throws NullPointerException {
-        if (collection.equals(null)) {
+        if (collection == null) {
             throw new NullPointerException("Collection not passed in");
         }
 
@@ -167,11 +172,11 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends E> collection) throws NullPointerException {
-        if (index > size()-1 || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
+    public boolean addAll(int index, Collection<? extends E> collection) throws NullPointerException, IndexOutOfBoundsException {
         if (collection == null) {
             throw new NullPointerException("null passed as collection");
         }
+        if (index > size()-1 || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
 
         if (collection.contains(null)) {
             return false;
