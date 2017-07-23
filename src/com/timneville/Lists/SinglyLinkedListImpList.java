@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.*;
 import com.timneville.Node;
 
@@ -335,12 +336,32 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         return returnedArray;
     }
 
+    /** Returns an array containing all of the elements in this list in proper sequence (from first to last element);
+     * the runtime type of the returned array is that of the specified array.
+     * If the list fits in the specified array, it is returned therein.
+     * Otherwise, a new array is allocated with the runtime type of the specified array and the size of this list.
+     *
+     * If the list fits in the specified array with room to spare (i.e., the array has more elements than the list),
+     * the element in the array immediately following the end of the list is set to null.
+     *
+     * */
     @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
+    public <T> T[] toArray(T[] array) {
+        int size = size();
+        //if passed in array is too small, instantiate a new array with same component type (known at runtime)
+        if (array.length < size()) {
+            array = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
+        } else if (array.length > size) {
+            //if array is too large, set element immediately following the end of the list to null
+            array[size] = null;
+        }
+        int i = 0;
+        for (E element: this) {
+            array[i] = (T) element;
+            i++;
+        }
+        return array;
     }
-
-
 
 
     /**
