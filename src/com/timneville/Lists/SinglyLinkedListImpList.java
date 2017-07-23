@@ -222,6 +222,7 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         if (index == 0) {
             removedElement = head.getElement();
             head = head.getNext();
+            size--;
             return removedElement;
         }
 
@@ -231,6 +232,7 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         }
         removedElement = currentNode.getNext().getElement();
         currentNode.setNext(currentNode.getNext());
+        size--;
         return removedElement;
     }
 
@@ -385,8 +387,8 @@ public class SinglyLinkedListImpList<E> implements List<E> {
                 }
                 currentlySelectedNode = currentNode.getNext();   //for use by the remove() or set() methods
                 E answer = currentlySelectedNode.getNext().getElement();    //get prev element to return;
-                prevNode.setNext(currentNode);                  //set prevNode to currentNode (which is prevIndex-1)
-                nextNode.setNext(currentNode.getNext());        //set nextNode to currentNode.next (which is prevIndex)
+                prevNode = currentNode;                  //set prevNode to currentNode (which is prevIndex-1)
+                nextNode = currentNode.getNext();        //set nextNode to currentNode.next (which is prevIndex)
 
                 nextIndex--;
                 prevIndex--;
@@ -409,15 +411,26 @@ public class SinglyLinkedListImpList<E> implements List<E> {
                 if (currentlySelectedNode == null) {
                     throw new IllegalStateException("next or previous have not been called, or removed/add has been called since last next/previous call");
                 }
+
+                if (currentlySelectedNode == head) {
+                    head = head.getNext();
+                }
+
+                prevNode.setNext(nextNode.getNext());
+
                 currentlySelectedNode = null;
+                size--;
             }
 
             /**  */
             @Override
-            public void set(E e) throws IllegalStateException {
+            public void set(E element) throws IllegalStateException {
                 if (currentlySelectedNode == null) {
                     throw new IllegalStateException("next or previous have not been called, or removed/add has been called since last next/previous call");
                 }
+
+                currentlySelectedNode.setElement(element);
+
                 currentlySelectedNode = null;
             }
         };
