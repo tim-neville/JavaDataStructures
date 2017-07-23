@@ -301,144 +301,12 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         if (isEmpty()) {
             return Collections.<E>emptyList().listIterator();
         }
-
-        return new ListIterator<E>() {
-            private Node<E> prevNode;
-            private Node<E> nextNode;
-            private int nextIndex = 0;
-            private int prevIndex = -1;
-            private Node<E> currentlySelectedNode;
-
-            /** Inserts element into the list before implicit cursor. A call to previous would return the new element
-             * (i.e. this call increments nextIndex and prevIndex */
-            @Override
-            public void add(E element) {
-                if (isEmpty()) {
-                    head = new Node<E>(element, null);
-                    tail = head;
-                    prevNode = head;
-                    nextNode = null;
-                } else {
-                    prevNode.setNext(new Node<E>(element, nextNode));
-                }
-                size++;
-                nextIndex++;
-                prevIndex++;
-            }
-
-            /** Returns true if this list iterator has more elements when traversing the list in the forward direction.
-             * (In other words, returns true if next() would return an element rather than throwing an exception.) */
-            @Override
-            public boolean hasNext() {
-                return nextNode != null;
-            }
-
-            /** Returns true if this list iterator has more elements when traversing the list in the reverse direction.
-             * (In other words, returns true if previous() would return an element rather than throwing an exception.) */
-            @Override
-            public boolean hasPrevious() {
-                return prevNode != null;
-            }
-
-            /** Returns the next element in the list and advances the cursor position. */
-            @Override
-            public E next() throws NoSuchElementException {
-                if (nextNode == null) {
-                    throw new NoSuchElementException("No next element");
-                }
-
-                currentlySelectedNode = nextNode;   //for use by the remove() or set() methods
-                E answer = currentlySelectedNode.getElement();
-                prevNode = currentlySelectedNode;
-                if (currentlySelectedNode.getNext() != null) {
-                    nextNode = nextNode.getNext();
-                } else {
-                    nextNode = null;
-                }
-
-                nextIndex++;
-                prevIndex++;
-                return answer;
-            }
-
-            /** Returns the index of the element that would be returned by a subsequent call to next().
-             * (Returns list size if the list iterator is at the end of the list.) */
-            @Override
-            public int nextIndex() {
-                if (nextIndex > size()) {
-                    return size();
-                } else {
-                    return nextIndex;
-                }
-            }
-
-            /** Returns the previous element in the list and moves the cursor position backwards. */
-            @Override
-            public E previous() throws NoSuchElementException {
-                if (prevIndex == -1) {
-                    throw new NoSuchElementException("No previous element");
-                }
-
-                //because this is singly linked list, and we only have reference to the previousNode
-                //so will need to move from head to the index-1 in order to get prevNode reference.
-                Node<E> currentNode = head;
-                for (int i = 0; i < prevIndex; i++) {
-                    currentNode = currentNode.getNext();
-                }
-                currentlySelectedNode = currentNode.getNext();   //for use by the remove() or set() methods
-                E answer = currentlySelectedNode.getNext().getElement();    //get prev element to return;
-                prevNode = currentNode;                  //set prevNode to currentNode (which is prevIndex-1)
-                nextNode = currentNode.getNext();        //set nextNode to currentNode.next (which is prevIndex)
-
-                nextIndex--;
-                prevIndex--;
-
-                return answer;
-            }
-
-            /** Returns the index of the element that would be returned by a subsequent call to previous().
-             * (Returns -1 if the list iterator is at the beginning of the list.) */
-            @Override
-            public int previousIndex() {
-                return prevIndex;
-            }
-
-            /** Removes from the list the last element that was returned by next() or previous() (optional operation).
-             * This call can only be made once per call to next or previous.
-             * It can be made only if add(E) has not been called after the last call to next or previous. */
-            @Override
-            public void remove() throws IllegalStateException {
-                if (currentlySelectedNode == null) {
-                    throw new IllegalStateException("next or previous have not been called, or removed/add has been called since last next/previous call");
-                }
-
-                if (currentlySelectedNode == head) {
-                    head = head.getNext();
-                }
-
-                prevNode.setNext(nextNode.getNext());
-
-                currentlySelectedNode = null;
-                size--;
-            }
-
-            /**  */
-            @Override
-            public void set(E element) throws IllegalStateException {
-                if (currentlySelectedNode == null) {
-                    throw new IllegalStateException("next or previous have not been called, or removed/add has been called since last next/previous call");
-                }
-
-                currentlySelectedNode.setElement(element);
-
-                currentlySelectedNode = null;
-            }
-        };
+        return new MyListIterator();
     }
 
     @Override
     public ListIterator<E> listIterator(int index) {
-        return null;
+        return new MyListIterator();
     }
 
     @Override
@@ -462,5 +330,137 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         return null;
     }
 
+    private class MyListIterator implements ListIterator<E> {
+        private Node<E> prevNode;
+        private Node<E> nextNode;
+        private int nextIndex = 0;
+        private int prevIndex = -1;
+        private Node<E> currentlySelectedNode;
 
+        /** Inserts element into the list before implicit cursor. A call to previous would return the new element
+         * (i.e. this call increments nextIndex and prevIndex */
+        @Override
+        public void add(E element) {
+            if (isEmpty()) {
+                head = new Node<E>(element, null);
+                tail = head;
+                prevNode = head;
+                nextNode = null;
+            } else {
+                prevNode.setNext(new Node<E>(element, nextNode));
+            }
+            size++;
+            nextIndex++;
+            prevIndex++;
+        }
+
+        /** Returns true if this list iterator has more elements when traversing the list in the forward direction.
+         * (In other words, returns true if next() would return an element rather than throwing an exception.) */
+        @Override
+        public boolean hasNext() {
+            return nextNode != null;
+        }
+
+        /** Returns true if this list iterator has more elements when traversing the list in the reverse direction.
+         * (In other words, returns true if previous() would return an element rather than throwing an exception.) */
+        @Override
+        public boolean hasPrevious() {
+            return prevNode != null;
+        }
+
+        /** Returns the next element in the list and advances the cursor position. */
+        @Override
+        public E next() throws NoSuchElementException {
+            if (nextNode == null) {
+                throw new NoSuchElementException("No next element");
+            }
+
+            currentlySelectedNode = nextNode;   //for use by the remove() or set() methods
+            E answer = currentlySelectedNode.getElement();
+            prevNode = currentlySelectedNode;
+            if (currentlySelectedNode.getNext() != null) {
+                nextNode = nextNode.getNext();
+            } else {
+                nextNode = null;
+            }
+
+            nextIndex++;
+            prevIndex++;
+            return answer;
+        }
+
+        /** Returns the index of the element that would be returned by a subsequent call to next().
+         * (Returns list size if the list iterator is at the end of the list.) */
+        @Override
+        public int nextIndex() {
+            if (nextIndex > size()) {
+                return size();
+            } else {
+                return nextIndex;
+            }
+        }
+
+        /** Returns the previous element in the list and moves the cursor position backwards. */
+        @Override
+        public E previous() throws NoSuchElementException {
+            if (prevIndex == -1) {
+                throw new NoSuchElementException("No previous element");
+            }
+
+            //because this is singly linked list, and we only have reference to the previousNode
+            //so will need to move from head to the index-1 in order to get prevNode reference.
+            Node<E> currentNode = head;
+            for (int i = 0; i < prevIndex; i++) {
+                currentNode = currentNode.getNext();
+            }
+            currentlySelectedNode = currentNode.getNext();   //for use by the remove() or set() methods
+            E answer = currentlySelectedNode.getNext().getElement();    //get prev element to return;
+            prevNode = currentNode;                  //set prevNode to currentNode (which is prevIndex-1)
+            nextNode = currentNode.getNext();        //set nextNode to currentNode.next (which is prevIndex)
+
+            nextIndex--;
+            prevIndex--;
+
+            return answer;
+        }
+
+        /** Returns the index of the element that would be returned by a subsequent call to previous().
+         * (Returns -1 if the list iterator is at the beginning of the list.) */
+        @Override
+        public int previousIndex() {
+            return prevIndex;
+        }
+
+        /** Removes from the list the last element that was returned by next() or previous() (optional operation).
+         * This call can only be made once per call to next or previous.
+         * It can be made only if add(E) has not been called after the last call to next or previous. */
+        @Override
+        public void remove() throws IllegalStateException {
+            if (currentlySelectedNode == null) {
+                throw new IllegalStateException("next or previous have not been called, or removed/add has been called since last next/previous call");
+            }
+
+            if (currentlySelectedNode == head) {
+                head = head.getNext();
+            }
+
+            prevNode.setNext(nextNode.getNext());
+
+            currentlySelectedNode = null;
+            size--;
+        }
+
+        /** Replaces the last element returned by next() or previous() with the specified element (optional operation).
+         * This call can be made only if neither remove() nor add(E) have been called after the last call to next or previous. */
+        @Override
+        public void set(E element) throws IllegalStateException {
+            if (currentlySelectedNode == null) {
+                throw new IllegalStateException("next or previous have not been called, or removed/add has been called since last next/previous call");
+            }
+
+            currentlySelectedNode.setElement(element);
+
+            currentlySelectedNode = null;
+        }
+    }
 }
