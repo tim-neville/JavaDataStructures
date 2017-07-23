@@ -386,7 +386,11 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
         public MyListIterator() {}
 
-        public MyListIterator(int index) {
+        public MyListIterator(int index) throws IndexOutOfBoundsException {
+            if (index < 0 || index > size()) {
+                throw new IndexOutOfBoundsException("Index out of bounds.");
+            }
+
             this.nextIndex = index+1;
             this.prevIndex = index-1;
 
