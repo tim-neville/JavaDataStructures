@@ -1,12 +1,16 @@
 package com.timneville.Lists;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
 import com.timneville.Node;
 
 /**
  * Created by timneville on 21/6/17.
  */
-public class SinglyLinkedListImpList<E> implements List<E> {
+public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
     private Node<E> head = null;
     private Node<E> tail = null;
     private int size = 0;
@@ -20,6 +24,12 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     public SinglyLinkedListImpList(E[] elements) throws IllegalStateException {
         //throw new IllegalStateException("String array was not passed in.");
         addAll(Arrays.asList(elements));
+
+//        try {
+//            ObjectOutputStream oo = new ObjectOutputStream(new FileOutputStream("save.ser"));
+//            oo.writeObject(this);
+//            oo.close();
+//        } catch (IOException ioe){}
     }
 
     @Override
@@ -318,8 +328,8 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     public Object[] toArray() {
         Object[] returnedArray = new Object[size()];
         Node currentNode = head;
-        for (Object element: returnedArray) {
-            element = currentNode.getElement();
+        for (int i = 0; i < size(); i++) {
+            returnedArray[i] = currentNode.getElement();
             currentNode = currentNode.getNext();
         }
         return returnedArray;
@@ -330,8 +340,15 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         return null;
     }
 
-    /** Nested listIterator */
-    private class MyListIterator implements ListIterator<E> {
+
+
+
+    /**
+     *
+     * Nested listIterator
+     *
+     * */
+    private class MyListIterator implements ListIterator<E>, Serializable {
         private Node<E> prevNode;
         private Node<E> nextNode;
         private int nextIndex = 0;
