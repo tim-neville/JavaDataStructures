@@ -80,7 +80,7 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         if (element == null) {
             throw new NullPointerException("null passed as element");
         }
-        if (index > size()-1 || index < 0) {
+        if (index > size() || index < 0) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
 
@@ -176,7 +176,7 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         if (collection == null) {
             throw new NullPointerException("null passed as collection");
         }
-        if (index > size()-1 || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
+        if (index > size() || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
 
         if (collection.contains(null)) {
             return false;
