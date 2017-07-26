@@ -16,21 +16,12 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
     private Node<E> tail = null;
     private int size = 0;
 
+    /** Constructors */
     public SinglyLinkedListImpList() {}
 
-
-    /**
-     * IMPLEMENT ME
-     * */
     public SinglyLinkedListImpList(E[] elements) throws IllegalStateException {
         //throw new IllegalStateException("String array was not passed in.");
         addAll(Arrays.asList(elements));
-
-//        try {
-//            ObjectOutputStream oo = new ObjectOutputStream(new FileOutputStream("save.ser"));
-//            oo.writeObject(this);
-//            oo.close();
-//        } catch (IOException ioe){}
     }
 
     @Override
@@ -43,22 +34,11 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         return size == 0;
     }
 
-    //Returns true if this list contains the specified element
     @Override
     public boolean contains(Object object) {
-//        Iterator<E> iterator = iterator();
-//        while (iterator.hasNext()) {
-//            E element = iterator.next();
-//            if (element.equals(o)) {
-//                return true;
-//            }
-//        }
-//        return tail.getElement().equals(o); //tail was getting missed so final check is if tail is equal to object passed in
-
         return indexOf(object) != -1;
     }
 
-    //Appends the specified element to the end of this list
     @Override
     public boolean add(E element) {
         Node<E> newNode = new Node<>(element, null);
@@ -73,8 +53,6 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         return true;
     }
 
-    //Inserts a new element at the specified index in the list, moving all subsequent elements one index later in the list
-    //an error is thrown if index is not in range [0, size()]
     @Override
     public void add(int index, E element) throws IndexOutOfBoundsException {
         if (index > size() || index < 0) {
@@ -90,7 +68,7 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
             tail = newNode;
         } else {
             for (int i = 0; i < index; i++) {
-                currentNode = currentNode.getNext();             //traverse the list to one before the index location
+                currentNode = currentNode.getNext();
             }
             if (currentNode.getNext() != null) {
                 newNodeNext = currentNode.getNext();
@@ -129,10 +107,6 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         }
         return false;
     }
-
-    /**
-     * Returns true if this collection contains all of the elements in the specified collection.
-     * */
 
     @Override
     public boolean containsAll(Collection<?> collection) throws NullPointerException {
@@ -259,8 +233,6 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         return currentNode.getElement();
     }
 
-    //Replaces the element at index with a different element
-    //Error is thrown if index is not in range [0, size()-1]
     @Override
     public E set(int index, E element) throws IndexOutOfBoundsException {
         if (index > size()-1 || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
@@ -282,7 +254,6 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
     }
 
     //Removes and returns the element at index, moving all subsequent elements one index earlier in the list
-    //An error is thrown if index is not in range [0, size()-1]
     @Override
     public E remove(int index) {
         if (index > size()-1 || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
@@ -337,7 +308,6 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         return index;
     }
 
-    //Returns an iterator over the elements in this list in proper sequence.
     @Override
     public Iterator<E> iterator() {
         if (isEmpty()) {
@@ -403,15 +373,13 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         return returnedArray;
     }
 
-    /** Returns an array containing all of the elements in this list in proper sequence (from first to last element);
-     * the runtime type of the returned array is that of the specified array.
-     * If the list fits in the specified array, it is returned therein.
-     * Otherwise, a new array is allocated with the runtime type of the specified array and the size of this list.
-     *
-     * If the list fits in the specified array with room to spare (i.e., the array has more elements than the list),
-     * the element in the array immediately following the end of the list is set to null.
-     *
-     * */
+//     Returns an array containing all of the elements in this list in proper sequence (from first to last element);
+//     the runtime type of the returned array is that of the specified array.
+//     If the list fits in the specified array, it is returned in that array.
+//     Otherwise, a new array is allocated with the runtime type of the specified array and the size of this list.
+//
+//     If the list fits in the specified array with room to spare (i.e., the array has more elements than the list),
+//     the element in the array immediately following the end of the list is set to null.
     @Override
     public <T> T[] toArray(T[] array) {
         int size = size();
@@ -432,10 +400,10 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
 
     /**
-     *
-     * Nested listIterator
-     *
-     * */
+     **
+     ** Nested listIterator
+     **
+     **/
     private class MyListIterator implements ListIterator<E>, Serializable {
         private Node<E> prevNode;
         private Node<E> nextNode;
