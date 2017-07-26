@@ -76,10 +76,7 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
     //Inserts a new element at the specified index in the list, moving all subsequent elements one index later in the list
     //an error is thrown if index is not in range [0, size()]
     @Override
-    public void add(int index, E element) throws IndexOutOfBoundsException, NullPointerException {
-        if (element == null) {
-            throw new NullPointerException("null passed as element");
-        }
+    public void add(int index, E element) throws IndexOutOfBoundsException {
         if (index > size() || index < 0) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
@@ -161,11 +158,14 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
             throw new NullPointerException("null passed as collection");
         }
 
-        if (collection.contains(null)) {
+        if (collection.isEmpty()) {
             return false;
         }
 
         for (E element : collection) {
+            if (element == null) {
+                element = (E) new Object[]{null};
+            }
            add(element);
         }
         return true;
@@ -178,10 +178,13 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         }
         if (index > size() || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
 
-        if (collection.contains(null)) {
+        if (collection.isEmpty()) {
             return false;
         }
         for (E element : collection) {
+            if (element == null) {
+                element = (E) new Object[]{null};
+            }
             add(index, element);
         }
         return false;
@@ -189,6 +192,14 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
     @Override
     public boolean removeAll(Collection<?> collection) {
+        if (collection == null) {
+            throw new NullPointerException("null passed as collection");
+        }
+
+        if (collection.isEmpty()) {
+            return false;
+        }
+
         boolean didRemove = false;
 
         Iterator<E> collectionIterator = (Iterator<E>) collection.iterator();
@@ -204,7 +215,25 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
     @Override
     public boolean retainAll(Collection<?> collection) {
-        return false;
+        if (collection == null) {
+            throw new NullPointerException("null passed as collection");
+        }
+
+        if (collection.isEmpty()) {
+            return false;
+        }
+
+        boolean listHasChanged = false;
+
+        ListIterator<E> listIterator = new MyListIterator();
+        while (listIterator.hasNext()) {
+            if (!collection.contains(listIterator.next())) {
+                listIterator.remove();
+                listHasChanged = true;
+            }
+        }
+
+        return listHasChanged;
     }
 
     @Override
@@ -270,7 +299,7 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         for (int i = 0; i < index; i++) {
             currentNode = currentNode.getNext();
         }
-        removedElement = currentNode.getNext().getElement();
+        removedElement = currentNode.getElement();
         currentNode.setNext(currentNode.getNext());
         size--;
         return removedElement;
@@ -281,7 +310,7 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         Node currentNode = head;
         int index = 0;
         while (currentNode != null) {
-                if (currentNode.getElement().equals(object)) {
+            if (currentNode.getElement().equals(object)) {
                     return index;
                 }
             index++;
@@ -356,7 +385,7 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         List<E> subList = new ArrayList();
         ListIterator<E> subListIterator = listIterator(fromIndex);
         while (subListIterator.hasNext() && (fromIndex < toIndex)) {
-            subList.add(get(fromIndex));
+            subList.add(subListIterator.next());
             fromIndex++;
         }
 
@@ -464,9 +493,9 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
         /** Returns the next element in the list and advances the cursor position. */
         @Override
-        public E next() throws NoSuchElementException {
+        public E next() {
             if (nextNode == null) {
-                throw new NoSuchElementException("No next element");
+                return null;
             }
 
             currentlySelectedNode = nextNode;   //for use by the remove() or set() methods
