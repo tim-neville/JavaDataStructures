@@ -1,6 +1,7 @@
 package com.timneville.Lists;
 
 import com.google.common.collect.testing.features.CollectionFeature;
+import com.google.common.collect.testing.testers.CollectionContainsAllTester;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -78,5 +79,4 @@ public class SinglyLinkedListImpListTest {
         }
         System.out.println(myList);
     }
-
 }

@@ -36,6 +36,9 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
     @Override
     public boolean contains(Object object) {
+        if (isEmpty()) {
+            return false;
+        }
         return indexOf(object) != -1;
     }
 
@@ -58,23 +61,28 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         if (index > size() || index < 0) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
-
         Node<E> currentNode = head;
         Node<E> newNode = new Node<>(element, null);
-        Node<E> newNodeNext = null;
+        Node<E> newNodeNext;
 
         if (isEmpty()) {
             head = newNode;
             tail = newNode;
+        } else if (index == 0) {
+            newNode.setNext(head);
+            head = newNode;
         } else {
-            for (int i = 0; i < index; i++) {
+            for (int i = 1; i < index; i++) {
                 currentNode = currentNode.getNext();
             }
             if (currentNode.getNext() != null) {
                 newNodeNext = currentNode.getNext();
+                currentNode.setNext(newNode);
+                newNode.setNext(newNodeNext);
+            } else {
+                currentNode.setNext(newNode);
+                tail = newNode;
             }
-            currentNode.setNext(newNode);
-            newNode.setNext(newNodeNext);
         }
         size++;
     }
