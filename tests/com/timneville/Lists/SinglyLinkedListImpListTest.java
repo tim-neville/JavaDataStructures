@@ -1,9 +1,13 @@
 package com.timneville.Lists;
 
+import com.google.common.collect.testing.features.CollectionFeature;
 import org.junit.Before;
 import org.junit.Test;
 
 
+import java.util.Arrays;
+
+import static com.google.common.collect.testing.features.CollectionFeature.SUPPORTS_ADD;
 import static org.junit.Assert.*;
 
 
@@ -64,4 +68,15 @@ public class SinglyLinkedListImpListTest {
     @Test
     public void removeReturnsTrue() throws Exception {
     }
+
+    @Test
+    public void testAddAll_supportedNonePresent() {
+
+        myList.addAll(Arrays.asList("d","e"));
+        for (Object o : myList) {
+            System.out.println(o);
+        }
+        System.out.println(myList);
+    }
+
 }

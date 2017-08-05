@@ -137,9 +137,6 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         }
 
         for (E element : collection) {
-            if (element == null) {
-                element = (E) new Object[]{null};
-            }
            add(element);
         }
         return true;
@@ -215,6 +212,23 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         head = null;
         tail = null;
         size = 0;
+    }
+
+    @Override
+    public String toString() {
+        if (head == null) {
+            return "[]";
+        } else {
+            StringBuilder returnString = new StringBuilder();
+            Iterator<E> iterator = iterator();
+            while (iterator.hasNext()) {
+                returnString.append(iterator.next());
+                if (iterator.hasNext()) {
+                    returnString.append(", ");
+                }
+            }
+            return "[" + returnString + "]";
+        }
     }
 
     //Returns the element at the specified index in the list.
@@ -315,14 +329,14 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         }
 
         return new Iterator<E>() {
-            Node<E> currentNode;
+            //by setting currentNode to head at start, dont have to check if null for hasNext...
+            Node<E> currentNode = head;
 
+            //...i.e. had if (currentNode.next != null) -> currentNode = head.
+            //...but since return a boolean, and head already assigned, can just check if currentNode != null...
             @Override
             public boolean hasNext() {
-                if (currentNode == null) {
-                    currentNode = head;
-                }
-                return currentNode.getNext() != null;
+                return currentNode != null;
             }
 
             @Override
@@ -397,7 +411,6 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         }
         return array;
     }
-
 
     /**
      **
