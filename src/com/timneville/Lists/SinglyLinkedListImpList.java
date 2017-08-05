@@ -148,17 +148,13 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
             throw new NullPointerException("null passed as collection");
         }
         if (index > size() || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
-
         if (collection.isEmpty()) {
             return false;
         }
         for (E element : collection) {
-            if (element == null) {
-                element = (E) new Object[]{null};
-            }
             add(index, element);
         }
-        return false;
+        return true;
     }
 
     @Override
