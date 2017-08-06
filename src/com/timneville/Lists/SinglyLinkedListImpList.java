@@ -40,7 +40,11 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
     }
 
     @Override
-    public boolean add(E element) {
+    public boolean add(E element) throws NullPointerException {
+        if (element == null) {
+            throw new NullPointerException("element cannot be null.");
+        }
+
         Node<E> newNode = new Node<>(element, null);
 
         if (isEmpty()) {
