@@ -51,12 +51,15 @@ public class SinglyLinkedListImpListTest {
 
     @Test
     public void listContainsElementAfterAddAtIndex() throws Exception {
+        Object nullObject = new Object[]{null};
+
         myList.add("Frogs");
         myList.add("Logs");
         myList.add("Planes");
         myList.add("Cars");
         myList.add("Trains");
         myList.add(1, "Dogs");
+        myList.add(1, nullObject);
 
         assertEquals("testAtIndex Dogs",true, myList.contains("Dogs"));
         assertEquals("testAdd Planes", true, myList.contains("Planes"));
@@ -64,6 +67,7 @@ public class SinglyLinkedListImpListTest {
         assertEquals("testAdd Planes", true, myList.contains("Frogs"));
         assertEquals("contains Logs still", true, myList.contains("Logs"));
         assertEquals("contains Trains still", true, myList.contains("Trains"));
+        assertEquals("contains null object", true, myList.contains(nullObject));
     }
 
     @Test

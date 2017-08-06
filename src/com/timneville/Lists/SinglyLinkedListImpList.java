@@ -1,8 +1,5 @@
 package com.timneville.Lists;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.*;
@@ -90,7 +87,7 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
     @Override
     public boolean remove(Object object) {
         if (isEmpty()) { return false; }
-        if (head.getElement().equals(object)) {
+        if (head.getElement() == object) {
             head = head.getNext();
             size--;
             if (isEmpty()) {
@@ -101,7 +98,7 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
         Node<E> currentNode = head;
         while (currentNode.getNext() != null) {
-            if (currentNode.getNext().getElement().equals(object)) {
+            if (currentNode.getElement() == object) {
                 if (currentNode.getNext().getNext() != null) {
                     currentNode.setNext(currentNode.getNext().getNext());
                 } else {
