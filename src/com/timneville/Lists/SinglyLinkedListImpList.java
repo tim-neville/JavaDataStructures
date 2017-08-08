@@ -8,7 +8,7 @@ import com.timneville.Node;
 /**
  * Created by timneville on 21/6/17.
  */
-public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
+public class SinglyLinkedListImpList<E> implements List<E> {
     private Node<E> head = null;
     private Node<E> tail = null;
     private int size = 0;
@@ -67,11 +67,10 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         }
         Node<E> currentNode = head;
         Node<E> newNode = new Node<>(element, null);
-        Node<E> newNodeNext;
 
         if (isEmpty()) {
             head = newNode;
-            tail = newNode;
+            tail = head;
         } else if (index == 0) {
             newNode.setNext(head);
             head = newNode;
@@ -80,9 +79,8 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
                 currentNode = currentNode.getNext();
             }
             if (currentNode.getNext() != null) {
-                newNodeNext = currentNode.getNext();
+                newNode.setNext(currentNode.getNext());
                 currentNode.setNext(newNode);
-                newNode.setNext(newNodeNext);
             } else {
                 currentNode.setNext(newNode);
                 tail = newNode;
@@ -152,18 +150,16 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> collection) throws NullPointerException, IndexOutOfBoundsException {
-        if (collection == null) {
-            throw new NullPointerException("null passed as collection");
-        }
         if (index > size() || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
+        if (collection == null) throw new NullPointerException("null passed as collection");
+
         if (collection.isEmpty()) {
             return false;
         }
+
         for (E element : collection) {
-            if (element == null) {
-                throw new NullPointerException("null element in collection");
-            }
-            add(element);
+            add(index, element);
+            index++;
         }
         return true;
     }
@@ -255,23 +251,24 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
     }
 
     @Override
-    public E set(int index, E element) throws IndexOutOfBoundsException {
+    public E set(int index, E element) throws IndexOutOfBoundsException, NullPointerException {
         if (index > size()-1 || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
-        if (isEmpty()) return null;
-        E removedElement;
+        if (element == null) throw new NullPointerException("null passed as element");
+
+        E originalElement;
         if (index == 0) {
-            removedElement = head.getElement();
+            originalElement = head.getElement();
             head.setElement(element);
-            return removedElement;
+            return originalElement;
         }
 
         Node<E> currentNode = head;
-        for (int i = 0; i <= index; i++) {
+        for (int i = 0; i < index; i++) {
             currentNode = currentNode.getNext();
         }
-        removedElement = currentNode.getElement();
+        originalElement = currentNode.getElement();
         currentNode.setElement(element);
-        return removedElement;
+        return originalElement;
     }
 
     //Removes and returns the element at index, moving all subsequent elements one index earlier in the list
@@ -279,6 +276,7 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
     public E remove(int index) {
         if (index > size()-1 || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
         if (isEmpty()) return null;
+
         E removedElement;
         if (index == 0) {
             removedElement = head.getElement();
@@ -288,11 +286,13 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         }
 
         Node<E> currentNode = head;
+        Node<E> prevNode = currentNode;
         for (int i = 0; i < index; i++) {
+            prevNode = currentNode;
             currentNode = currentNode.getNext();
         }
         removedElement = currentNode.getElement();
-        currentNode.setNext(currentNode.getNext());
+        prevNode.setNext(currentNode.getNext());
         size--;
         return removedElement;
     }
@@ -318,22 +318,20 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
             return -1;
         }
         int index = 0;
+        int lastIndex = index;
         Node currentNode = head;
         while (currentNode != null) {
             if (currentNode.getElement().equals(object)) {
-                index++;
+                lastIndex = index;
             }
+            index++;
             currentNode = currentNode.getNext();
         }
-        // if o is not in the list return -1
-        return index;
+        return lastIndex;
     }
 
     @Override
     public Iterator<E> iterator() {
-        if (isEmpty()) {
-            return Collections.<E>emptyList().iterator();
-        }
 
         return new Iterator<E>() {
             //by setting currentNode to head at start, don't have to check if null for hasNext...
@@ -371,9 +369,6 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
     @Override
     public ListIterator<E> listIterator() {
-        if (isEmpty()) {
-            return Collections.<E>emptyList().listIterator();
-        }
         return new MyListIterator();
     }
 
@@ -389,13 +384,16 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        if (fromIndex > size() || fromIndex < 0) throw new IndexOutOfBoundsException("Index out of bounds");
+        if (fromIndex > size() || fromIndex < 0 || fromIndex > toIndex || toIndex > size()) throw new IndexOutOfBoundsException("Index out of bounds");
+        if (isEmpty()) return this;
 
         List<E> subList = new ArrayList();
-        ListIterator<E> subListIterator = listIterator(fromIndex);
-        while (subListIterator.hasNext() && (fromIndex < toIndex)) {
-            subList.add(subListIterator.next());
-            fromIndex++;
+        Iterator<E> iterator = iterator();
+        for (int i = 0; i < fromIndex-1; i++) {
+            iterator.next();
+        }
+        for (int i = fromIndex; i < toIndex; i++) {
+            subList.add(iterator.next());
         }
 
         return subList;
@@ -412,17 +410,10 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
         return returnedArray;
     }
 
-//     Returns an array containing all of the elements in this list in proper sequence (from first to last element);
-//     the runtime type of the returned array is that of the specified array.
-//     If the list fits in the specified array, it is returned in that array.
-//     Otherwise, a new array is allocated with the runtime type of the specified array and the size of this list.
-//
-//     If the list fits in the specified array with room to spare (i.e., the array has more elements than the list),
-//     the element in the array immediately following the end of the list is set to null.
     @Override
     public <T> T[] toArray(T[] array) {
         int size = size();
-        //if passed in array is too small, instantiate a new array with same component type (known at runtime)
+        //if passed in array is too small, instantiate new array
         if (array.length < size()) {
             array = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
         } else if (array.length > size) {
@@ -443,11 +434,9 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
      **
      **/
     private class MyListIterator implements ListIterator<E>, Serializable {
-        private Node<E> prevNode;
-        private Node<E> nextNode;
+        private int selectedIndex = -1;
         private int nextIndex = 0;
         private int prevIndex = -1;
-        private Node<E> currentlySelectedNode;
 
         public MyListIterator() {}
 
@@ -455,71 +444,45 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
             if (index < 0 || index > size()) {
                 throw new IndexOutOfBoundsException("Index out of bounds.");
             }
-
-            this.nextIndex = index+1;
+            this.nextIndex = index;
             this.prevIndex = index-1;
-
-            nextNode = head;
-            for (int i = 0; i < index; i++) {
-                prevNode = nextNode;
-                nextNode = nextNode.getNext();
-            }
         }
 
-        /** Inserts element into the list before implicit cursor. A call to previous would return the new element
-         * (i.e. this call increments nextIndex and prevIndex */
         @Override
-        public void add(E element) {
-            if (isEmpty()) {
-                head = new Node<E>(element, null);
-                tail = head;
-                prevNode = head;
-                nextNode = null;
-            } else {
-                prevNode.setNext(new Node<E>(element, nextNode));
+        public void add(E element) throws IllegalArgumentException {
+            if (element == null) {
+                throw new IllegalArgumentException("null element");
             }
-            size++;
+
+            SinglyLinkedListImpList.this.add(nextIndex, element);
             nextIndex++;
             prevIndex++;
+            selectedIndex = -1;
         }
 
-        /** Returns true if this list iterator has more elements when traversing the list in the forward direction.
-         * (In other words, returns true if next() would return an element rather than throwing an exception.) */
         @Override
         public boolean hasNext() {
-            return nextNode != null;
+            return nextIndex < size();
         }
 
-        /** Returns true if this list iterator has more elements when traversing the list in the reverse direction.
-         * (In other words, returns true if previous() would return an element rather than throwing an exception.) */
         @Override
         public boolean hasPrevious() {
-            return prevNode != null;
+            return prevIndex > -1;
         }
 
-        /** Returns the next element in the list and advances the cursor position. */
         @Override
         public E next() {
-            if (nextNode == null) {
-                return null;
+            if (nextIndex >= size()) {
+                throw new NoSuchElementException("no next element");
             }
-
-            currentlySelectedNode = nextNode;   //for use by the remove() or set() methods
-            E answer = currentlySelectedNode.getElement();
-            prevNode = currentlySelectedNode;
-            if (currentlySelectedNode.getNext() != null) {
-                nextNode = nextNode.getNext();
-            } else {
-                nextNode = null;
-            }
+            selectedIndex = nextIndex;
+            E answer = get(nextIndex);
 
             nextIndex++;
             prevIndex++;
             return answer;
         }
 
-        /** Returns the index of the element that would be returned by a subsequent call to next().
-         * (Returns list size if the list iterator is at the end of the list.) */
         @Override
         public int nextIndex() {
             if (nextIndex > size()) {
@@ -529,23 +492,14 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
             }
         }
 
-        /** Returns the previous element in the list and moves the cursor position backwards. */
         @Override
         public E previous() throws NoSuchElementException {
-            if (prevIndex == -1) {
+            if (prevIndex <= -1) {
                 throw new NoSuchElementException("No previous element");
             }
 
-            //because this is singly linked list, and we only have reference to the previousNode
-            //so will need to move from head to the index-1 in order to get prevNode reference.
-            Node<E> currentNode = head;
-            for (int i = 0; i < prevIndex; i++) {
-                currentNode = currentNode.getNext();
-            }
-            currentlySelectedNode = currentNode.getNext();   //for use by the remove() or set() methods
-            E answer = currentlySelectedNode.getNext().getElement();    //get prev element to return;
-            prevNode = currentNode;                  //set prevNode to currentNode (which is prevIndex-1)
-            nextNode = currentNode.getNext();        //set nextNode to currentNode.next (which is prevIndex)
+            selectedIndex = prevIndex;
+            E answer = get(prevIndex);    //get prev element to return;
 
             nextIndex--;
             prevIndex--;
@@ -553,43 +507,29 @@ public class SinglyLinkedListImpList<E> implements List<E>, Serializable {
             return answer;
         }
 
-        /** Returns the index of the element that would be returned by a subsequent call to previous().
-         * (Returns -1 if the list iterator is at the beginning of the list.) */
         @Override
         public int previousIndex() {
             return prevIndex;
         }
 
-        /** Removes from the list the last element that was returned by next() or previous() (optional operation).
-         * This call can only be made once per call to next or previous.
-         * It can be made only if add(E) has not been called after the last call to next or previous. */
         @Override
         public void remove() throws IllegalStateException {
-            if (currentlySelectedNode == null) {
+            if (selectedIndex == -1) {
                 throw new IllegalStateException("next or previous have not been called, or removed/add has been called since last next/previous call");
             }
-
-            if (currentlySelectedNode == head) {
-                head = head.getNext();
-            }
-
-            prevNode.setNext(nextNode.getNext());
-
-            currentlySelectedNode = null;
-            size--;
+            SinglyLinkedListImpList.this.remove(selectedIndex);
+            selectedIndex = -1;
+            nextIndex--;
+            prevIndex--;
         }
 
-        /** Replaces the last element returned by next() or previous() with the specified element (optional operation).
-         * This call can be made only if neither remove() nor add(E) have been called after the last call to next or previous. */
         @Override
         public void set(E element) throws IllegalStateException {
-            if (currentlySelectedNode == null) {
+            if (selectedIndex == -1) {
                 throw new IllegalStateException("next or previous have not been called, or removed/add has been called since last next/previous call");
             }
-
-            currentlySelectedNode.setElement(element);
-
-            currentlySelectedNode = null;
+            SinglyLinkedListImpList.this.set(selectedIndex, element);
+            selectedIndex = -1;
         }
     }
 }
