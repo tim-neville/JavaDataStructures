@@ -3,6 +3,8 @@ package com.timneville.Lists;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.*;
+
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import com.timneville.Node;
 
 /**
@@ -274,7 +276,7 @@ public class SinglyLinkedListImpList<E> implements List<E> {
     //Removes and returns the element at index, moving all subsequent elements one index earlier in the list
     @Override
     public E remove(int index) {
-        if (index > size()-1 || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
+        if (index >= size || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
         if (isEmpty()) return null;
 
         E removedElement;
@@ -285,9 +287,9 @@ public class SinglyLinkedListImpList<E> implements List<E> {
             return removedElement;
         }
 
-        Node<E> currentNode = head;
-        Node<E> prevNode = currentNode;
-        for (int i = 0; i < index; i++) {
+        Node<E> prevNode = head;
+        Node<E> currentNode = head.getNext();
+        for (int i = 1; i < index; i++) {
             prevNode = currentNode;
             currentNode = currentNode.getNext();
         }
@@ -384,17 +386,23 @@ public class SinglyLinkedListImpList<E> implements List<E> {
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        if (fromIndex > size() || fromIndex < 0 || fromIndex > toIndex || toIndex > size()) throw new IndexOutOfBoundsException("Index out of bounds");
+        if (fromIndex > size() || fromIndex < 0 || fromIndex > toIndex || toIndex > size())
+            throw new IndexOutOfBoundsException("Index out of bounds");
         if (isEmpty()) return this;
 
-        List<E> subList = new ArrayList();
-        Iterator<E> iterator = iterator();
-        for (int i = 0; i < fromIndex-1; i++) {
-            iterator.next();
+        SinglyLinkedListImpList<E> subList = new SinglyLinkedListImpList<E>();
+
+        Node<E> currentNode = head;
+        for (int i = 0; i < fromIndex; i++) {
+            currentNode = currentNode.getNext();
         }
+        subList.head = currentNode;
+
         for (int i = fromIndex; i < toIndex; i++) {
-            subList.add(iterator.next());
+            currentNode = currentNode.getNext();
         }
+        subList.tail = currentNode;
+        subList.size = toIndex+1 - fromIndex;
 
         return subList;
     }
@@ -433,19 +441,23 @@ public class SinglyLinkedListImpList<E> implements List<E> {
      ** Nested listIterator
      **
      **/
-    private class MyListIterator implements ListIterator<E>, Serializable {
+    private class MyListIterator implements ListIterator<E> {
         private int selectedIndex = -1;
         private int nextIndex = 0;
         private int prevIndex = -1;
 
-        public MyListIterator() {}
+        public MyListIterator() {
+            printIndexs("--START--ConstructorDefault");
+        }
 
         public MyListIterator(int index) throws IndexOutOfBoundsException {
             if (index < 0 || index > size()) {
                 throw new IndexOutOfBoundsException("Index out of bounds.");
             }
-            this.nextIndex = index;
+            this.nextIndex = index+1;
             this.prevIndex = index-1;
+
+            printIndexs("--START--ConstructorAtIndex");
         }
 
         @Override
@@ -458,6 +470,8 @@ public class SinglyLinkedListImpList<E> implements List<E> {
             nextIndex++;
             prevIndex++;
             selectedIndex = -1;
+
+            printIndexs("Add");
         }
 
         @Override
@@ -472,14 +486,16 @@ public class SinglyLinkedListImpList<E> implements List<E> {
 
         @Override
         public E next() {
-            if (nextIndex >= size()) {
+            if (!hasNext() || isEmpty()) {
                 throw new NoSuchElementException("no next element");
             }
-            selectedIndex = nextIndex;
-            E answer = get(nextIndex);
+            selectedIndex = nextIndex();
+            E answer = get(nextIndex());
 
             nextIndex++;
             prevIndex++;
+
+            printIndexs("Next");
             return answer;
         }
 
@@ -497,13 +513,12 @@ public class SinglyLinkedListImpList<E> implements List<E> {
             if (prevIndex <= -1) {
                 throw new NoSuchElementException("No previous element");
             }
-
-            selectedIndex = prevIndex;
-            E answer = get(prevIndex);    //get prev element to return;
+            selectedIndex = previousIndex();
+            E answer = get(previousIndex());    //get prev element to return;
 
             nextIndex--;
             prevIndex--;
-
+            printIndexs("Previous");
             return answer;
         }
 
@@ -519,8 +534,11 @@ public class SinglyLinkedListImpList<E> implements List<E> {
             }
             SinglyLinkedListImpList.this.remove(selectedIndex);
             selectedIndex = -1;
-            nextIndex--;
-            prevIndex--;
+            if (nextIndex != 0 && prevIndex != -1) {
+                nextIndex--;
+                prevIndex--;
+            }
+            printIndexs("Remove");
         }
 
         @Override
@@ -529,7 +547,22 @@ public class SinglyLinkedListImpList<E> implements List<E> {
                 throw new IllegalStateException("next or previous have not been called, or removed/add has been called since last next/previous call");
             }
             SinglyLinkedListImpList.this.set(selectedIndex, element);
-            selectedIndex = -1;
+            //selectedIndex = -1;
+        }
+
+        public void printIndexs(String context) {
+            System.out.println();
+            System.out.println(context + ":");
+            System.out.println("SelectedIndex: " + selectedIndex);
+            System.out.println("NextIndex: " + nextIndex);
+            System.out.println("PrevIndex: " + prevIndex);
+            System.out.println();
+            System.out.println("Collection following the above action::");
+            System.out.println();
+            for (Object o : SinglyLinkedListImpList.this) {
+                System.out.println(o);
+            }
+            System.out.println();
         }
     }
 }

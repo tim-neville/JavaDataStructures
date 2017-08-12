@@ -7,6 +7,8 @@ import org.junit.Test;
 
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 import static com.google.common.collect.testing.features.CollectionFeature.SUPPORTS_ADD;
 import static org.junit.Assert.*;
@@ -74,13 +76,35 @@ public class SinglyLinkedListImpListTest {
     public void removeReturnsTrue() throws Exception {
     }
 
-    @Test
-    public void testAddAll_supportedNonePresent() {
+//    @Test
+//    public void testAddAll_supportedNonePresent() {
+//
+//        myList.addAll(Arrays.asList("d","e"));
+//        for (Object o : myList) {
+//            System.out.println(o);
+//        }
+//        System.out.println(myList);
+//    }
 
-        myList.addAll(Arrays.asList("d","e"));
-        for (Object o : myList) {
-            System.out.println(o);
-        }
-        System.out.println(myList);
+    @Test
+    public void listIteratorTest() throws Exception {
+        myList.add("b");
+        ListIterator myListIterator = myList.listIterator();
+
+        myListIterator.add("e");
+        myListIterator.add("e");
+        assertEquals("b", myListIterator.next());
+        myListIterator.remove();
+
+//        assertTrue(myListIterator.hasNext());
+//        assertEquals("b", myListIterator.next()); //b
+//        myListIterator.remove();
+//        assertFalse(myListIterator.hasPrevious());
+
+//        for (Object o : myList) {
+//            System.out.println(o);
+//        }
+//        System.out.println(myList);
+
     }
 }
