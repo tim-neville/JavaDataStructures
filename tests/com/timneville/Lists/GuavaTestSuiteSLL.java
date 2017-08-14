@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
 import java.util.List;
 
 @RunWith(AllTests.class)
-public class GuavaTestSuite {
+public class GuavaTestSuiteSLL {
 
     public static TestSuite suite() {
         return ListTestSuiteBuilder.using(
