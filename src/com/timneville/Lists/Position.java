@@ -5,5 +5,4 @@ package com.timneville.Lists;
  */
 public interface Position<E> {
     E getElement() throws IllegalStateException;
-
 }

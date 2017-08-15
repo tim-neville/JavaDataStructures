@@ -1,5 +1,6 @@
 package com.timneville.Queues;
 
+import com.timneville.Maps.Entry;
 import java.util.Comparator;
 
 /**

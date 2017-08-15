@@ -1,5 +1,7 @@
 package com.timneville.Queues;
 
+import com.timneville.Maps.Entry;
+
 /**
  * Created by timneville on 15/8/17.
  */

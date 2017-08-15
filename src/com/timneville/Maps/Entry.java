@@ -1,4 +1,4 @@
-package com.timneville.Queues;
+package com.timneville.Maps;
 
 /**
  * Created by timneville on 15/8/17.
