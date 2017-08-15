@@ -50,10 +50,10 @@ public abstract class AbstractMap<K,V> implements MapADT<K,V> {
 
         //utilities
         protected void setKey(K key) { this.key = key; }
-        protected V setValue(V value) {
-            V old = value;
-            this.value = value;
-            return old;
+        protected V setValue(V newValue) {
+            V oldValue = value;
+            value = newValue;
+            return oldValue;
         }
     } //--end nested MapEntry class --//
 }
