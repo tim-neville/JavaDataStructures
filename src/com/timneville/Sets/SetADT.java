@@ -1,4 +1,4 @@
-package com.timneville.Set;
+package com.timneville.Sets;
 
 /**
  * Created by timneville on 14/8/17.
