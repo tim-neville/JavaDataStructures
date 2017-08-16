@@ -1,15 +1,15 @@
 package com.timneville.Sets;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by timneville on 15/8/17.
  */
-public class SetImp<E> implements Set<E> {
-    public SetImp(E[] elements) throws IllegalArgumentException {
+public class HashSetImpSet<E> implements Set<E> {
+
+
+
+    public HashSetImpSet(E[] elements) throws IllegalArgumentException {
         addAll(Arrays.asList(elements));
     }
 
@@ -58,6 +58,7 @@ public class SetImp<E> implements Set<E> {
         return false;
     }
 
+    //Union of two sets into one set
     @Override
     public boolean addAll(Collection<? extends E> collection) {
         for (E element : collection) {
@@ -66,11 +67,13 @@ public class SetImp<E> implements Set<E> {
         return true;
     }
 
+    //Retain elements that occur in both sets (Intersection)
     @Override
     public boolean retainAll(Collection<?> c) {
         return false;
     }
 
+    //Subtraction of common elements between two sets
     @Override
     public boolean removeAll(Collection<?> c) {
         return false;

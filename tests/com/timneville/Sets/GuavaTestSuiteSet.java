@@ -4,7 +4,6 @@ import com.google.common.collect.testing.SetTestSuiteBuilder;
 import com.google.common.collect.testing.TestStringSetGenerator;
 import com.google.common.collect.testing.features.CollectionSize;
 import com.google.common.collect.testing.features.SetFeature;
-import com.timneville.Sets.SetImp;
 import junit.framework.TestSuite;
 import org.junit.runner.RunWith;
 import org.junit.runners.AllTests;
@@ -24,7 +23,7 @@ public class GuavaTestSuiteSet {
                     @Override
                     protected Set<String> create(String[] elements) {
                         // Fill here your collection with the given elements
-                        return new SetImp<>(elements);
+                        return new HashSetImpSet<>(elements);
                     }
                 })
                 // The name of the test suite

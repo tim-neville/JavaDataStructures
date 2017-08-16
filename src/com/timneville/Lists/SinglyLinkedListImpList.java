@@ -21,6 +21,8 @@ public class SinglyLinkedListImpList<E> implements List<E> {
         addAll(Arrays.asList(elements));
     }
 
+    public Node<E> getHead() { return head; }
+
     @Override
     public int size() {
         return size;
