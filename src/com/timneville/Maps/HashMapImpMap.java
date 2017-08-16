@@ -11,11 +11,10 @@ import java.util.ArrayList;
  */
 public class HashMapImpMap<K,V> implements Map<K,V> {
     private SinglyLinkedListImpList[] hashArray;
-    private int arraySize = 0;
+    private int arraySize = 10;
     private int numEntries = 0;
 
-    public HashMapImpMap(int size) {
-        arraySize = size;
+    public HashMapImpMap() {
         hashArray = new SinglyLinkedListImpList[arraySize];
         for (int i = 0; i < arraySize; i++) {
             hashArray[i] = new SinglyLinkedListImpList();
@@ -24,6 +23,7 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
 
     public HashMapImpMap(Map.Entry<K, V>[] entries) throws IllegalArgumentException {
         arraySize = entries.length;
+
         hashArray = new SinglyLinkedListImpList[entries.length];
         for (int i = 0; i < arraySize; i++) {
             hashArray[i] = new SinglyLinkedListImpList();
@@ -48,7 +48,9 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
     }
 
     @Override
-    public boolean containsKey(Object key) {
+    public boolean containsKey(Object key) throws NullPointerException {
+        if (isEmpty()) return false;
+
         int hashCode = hashValue(key);
         Iterator iterator = hashArray[hashCode].iterator();
             while (iterator.hasNext()) {
@@ -77,6 +79,7 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
     @Override
     public V get(Object key) throws NullPointerException {
         if (key == null) { throw new NullPointerException("null passed as key"); }
+        if (isEmpty()) return null;
 
         int hashCode = hashValue(key);
         Iterator iterator = hashArray[hashCode].iterator();
@@ -90,7 +93,11 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
     }
 
     @Override
-    public V put(K key, V value) {
+    public V put(K key, V value) throws NullPointerException {
+        if (key == null || value == null) throw new NullPointerException("null passed in");
+
+        if (isEmpty()) {}
+
         int hashCode = hashValue(key);
         hashArray[hashCode].add(new MapEntry<>(key, value));
         numEntries++;
@@ -99,6 +106,8 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
 
     @Override
     public V remove(Object key) {
+        if (isEmpty()) return null;
+
         int hashCode = hashValue(key);
         Iterator iterator = hashArray[hashCode].iterator();
         SinglyLinkedListImpList currentList = hashArray[hashCode];
@@ -114,7 +123,9 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends V> m) {
+    public void putAll(Map<? extends K, ? extends V> m) throws NullPointerException {
+        if (m == null) throw new NullPointerException("null passed as map");
+
         Set<K> mapKeySet = (Set<K>) m.keySet();
         for (K each : mapKeySet) {
             this.put(each, m.get(each));
@@ -130,7 +141,15 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
 
     @Override
     public Set<K> keySet() {
-        return null;
+        HashSet<K> set = new HashSet();
+        for (SinglyLinkedListImpList each : hashArray) {
+            Iterator iterator = each.iterator();
+            while (iterator.hasNext()) {
+                MapEntry<K,V> currentEntry = (MapEntry<K, V>) iterator.next();
+                set.add(currentEntry.getKey());
+            }
+        }
+        return set;
     }
 
     @Override
