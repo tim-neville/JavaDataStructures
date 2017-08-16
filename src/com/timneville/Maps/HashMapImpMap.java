@@ -1,8 +1,10 @@
 package com.timneville.Maps;
 
-import com.timneville.Lists.SinglyLinkedListImpList;
+import com.timneville.Lists.*;
 
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Created by timneville on 15/8/17.
@@ -113,7 +115,10 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
 
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
-
+        Set<K> mapKeySet = (Set<K>) m.keySet();
+        for (K each : mapKeySet) {
+            this.put(each, m.get(each));
+        }
     }
 
     @Override
@@ -130,7 +135,15 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
 
     @Override
     public Collection<V> values() {
-        return null;
+        ArrayList<V> collection = new ArrayList<>();
+        for (SinglyLinkedListImpList each : hashArray) {
+            Iterator iterator = each.iterator();
+            while (iterator.hasNext()) {
+                MapEntry<K,V> currentEntry = (MapEntry<K, V>) iterator.next();
+                collection.add(currentEntry.getValue());
+            }
+        }
+        return collection;
     }
 
     @Override
