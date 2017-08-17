@@ -5,6 +5,8 @@ import com.timneville.Lists.*;
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.ArrayList;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * Created by timneville on 15/8/17.
@@ -98,6 +100,12 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
 
         if (isEmpty()) {}
 
+        /**
+         *
+         * Need dynamic re-sizing of array
+         *
+         * */
+
         int hashCode = hashValue(key);
         hashArray[hashCode].add(new MapEntry<>(key, value));
         numEntries++;
@@ -180,6 +188,16 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
             }
         }
         return set;
+    }
+
+    @Override
+    public V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("computeIfAbsent no supported");
+    }
+
+    @Override
+    public V merge(K key, V value, BiFunction<? super V, ? super V, ? extends V> remappingFunction) {
+        throw new UnsupportedOperationException("merge not supported");
     }
 
     //--nested MapEntry class--//
