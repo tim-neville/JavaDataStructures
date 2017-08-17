@@ -116,6 +116,7 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
             if (currentEntry.getKey().equals(key)) {
                 V removedEntry = currentEntry.getValue();
                 currentList.remove(currentEntry);
+                numEntries--;
                 return removedEntry;
             }
         }
@@ -128,14 +129,17 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
 
         Set<K> mapKeySet = (Set<K>) m.keySet();
         for (K each : mapKeySet) {
-            this.put(each, m.get(each));
+            put(each, m.get(each));
         }
     }
 
     @Override
     public void clear() {
-        for (SinglyLinkedListImpList each : hashArray) {
-            each.clear();
+        if (!isEmpty()) {
+            for (SinglyLinkedListImpList each : hashArray) {
+                each.clear();
+            }
+            numEntries = 0;
         }
     }
 
@@ -167,7 +171,15 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
 
     @Override
     public Set<Entry<K, V>> entrySet() {
-        return null;
+        HashSet set = new HashSet();
+        for (SinglyLinkedListImpList each : hashArray) {
+            Iterator iterator = each.iterator();
+            while (iterator.hasNext()) {
+                MapEntry<K,V> currentEntry = (MapEntry<K, V>) iterator.next();
+                set.add(currentEntry);
+            }
+        }
+        return set;
     }
 
     //--nested MapEntry class--//
