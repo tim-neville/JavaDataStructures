@@ -13,7 +13,7 @@ import java.util.function.Function;
  */
 public class HashMapImpMap<K,V> implements Map<K,V> {
     private SinglyLinkedListImpList[] hashArray;
-    private int arraySize = 10;
+    private final int arraySize = 13;
     private int numEntries = 0;
 
     public HashMapImpMap() {
@@ -24,19 +24,14 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
     }
 
     public HashMapImpMap(Map.Entry<K, V>[] entries) throws IllegalArgumentException {
-        arraySize = entries.length;
-
-        hashArray = new SinglyLinkedListImpList[entries.length];
-        for (int i = 0; i < arraySize; i++) {
-            hashArray[i] = new SinglyLinkedListImpList();
-        }
+        this();
         for (Entry<K, V> each : entries) {
             put(each.getKey(), each.getValue());
         }
     }
 
     private int hashValue(Object key) {
-        return ((Math.abs(key.hashCode()) % 109345121) % arraySize);
+        return key.hashCode() % arraySize;
     }
 
     @Override
@@ -76,6 +71,11 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.equals(this);
     }
 
     @Override
@@ -192,7 +192,14 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
 
     @Override
     public V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("computeIfAbsent no supported");
+        if (key == null) throw new NullPointerException("Null passed as key");
+        if (get(key) == null) {
+            V value = mappingFunction.apply(key);
+            if (value == null) { return null; }
+            return put(key, value);
+        } else {
+            return null;
+        }
     }
 
     @Override

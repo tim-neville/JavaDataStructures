@@ -2,8 +2,10 @@ package com.timneville.Maps;
 
 import com.google.common.collect.testing.MapTestSuiteBuilder;
 import com.google.common.collect.testing.TestStringMapGenerator;
+import com.google.common.collect.testing.features.CollectionFeature;
 import com.google.common.collect.testing.features.CollectionSize;
 import com.google.common.collect.testing.features.ListFeature;
+import com.google.common.collect.testing.features.MapFeature;
 import com.google.common.collect.testing.testers.MapComputeIfAbsentTester;
 import junit.framework.TestSuite;
 import org.junit.runner.RunWith;
@@ -30,8 +32,11 @@ public class GuavaTestSuiteMap {
                 // The name of the test suite
                 .named("My Map Tests")
                 // Here we give a hit what features our collection supports
-                .withFeatures(ListFeature.GENERAL_PURPOSE,
-//                        CollectionFeature.ALLOWS_NULL_VALUES,
+                .withFeatures(
+                        MapFeature.GENERAL_PURPOSE,
+                        MapFeature.SUPPORTS_PUT,
+                        MapFeature.SUPPORTS_REMOVE,
+//                          CollectionFeature.ALLOWS_NULL_VALUES,
 //                        CollectionFeature.SERIALIZABLE,
 //                        CollectionFeature.FAILS_FAST_ON_CONCURRENT_MODIFICATION,
                         CollectionSize.ANY)
