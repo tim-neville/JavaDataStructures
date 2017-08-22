@@ -34,6 +34,16 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
         return key.hashCode() % arraySize;
     }
 
+/**    @Override
+    public int hashCode() {
+        int sum;
+        for (Set<K, V> each : entrySet()) {
+            sum += each;
+        }
+
+        return entrySet().hashCode();
+    }*/
+
     @Override
     public int size() {
         return numEntries;
@@ -54,29 +64,29 @@ public class HashMapImpMap<K,V> implements Map<K,V> {
                 MapEntry<K,V> currentEntry = (MapEntry<K, V>) iterator.next();
                 if (currentEntry.getKey().equals(key)) {
                     return true;
-                }
+}
             }
-            return false;
-    }
+                    return false;
+                    }
 
-    @Override
-    public boolean containsValue(Object value) {
+@Override
+public boolean containsValue(Object value) {
         for (SinglyLinkedListImpList each : hashArray) {
-            Iterator iterator = each.iterator();
-            while (iterator.hasNext()) {
-                MapEntry<K,V> currentEntry = (MapEntry<K, V>) iterator.next();
-                if (currentEntry.getValue().equals(value)) {
-                    return true;
-                }
-            }
+        Iterator iterator = each.iterator();
+        while (iterator.hasNext()) {
+        MapEntry<K,V> currentEntry = (MapEntry<K, V>) iterator.next();
+        if (currentEntry.getValue().equals(value)) {
+        return true;
+        }
+        }
         }
         return false;
-    }
+        }
 
-    @Override
-    public boolean equals(Object obj) {
+@Override
+public boolean equals(Object obj) {
         return obj.equals(this);
-    }
+        }
 
     @Override
     public V get(Object key) throws NullPointerException {
