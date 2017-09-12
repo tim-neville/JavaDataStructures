@@ -1,14 +1,14 @@
 package com.timneville.Trees;
 
+import com.timneville.Lists.Position;
+
 /**
  * Created by timneville on 23/8/17.
  */
 
-import com.timneville.Lists.Position;
-
 /** BinaryTree - each node has at most two children
  *
- * This BinaryTreeADT adds three new behaviours to the base interface TreeADT
+ * BinaryTreeADT extends Tree definition, declares three additional accessor methods relevant to a Binary Tree.
  *
  * */
 public interface BinaryTreeADT<E> extends TreeADT<E> {

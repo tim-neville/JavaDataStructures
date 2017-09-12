@@ -9,7 +9,10 @@ import java.util.List;
  * Created by timneville on 23/8/17.
  */
 
-/** An abstract base class providing some functionality of the BinaryTree interface */
+/**
+ *  Abstract class defines implementation of accessor methods in context of a Binary Tree.
+ *
+ * */
 public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements BinaryTreeADT<E> {
 
     public Position<E> sibling(Position<E> position) {
@@ -37,5 +40,26 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
         if (right(position) != null)
             snapshot.add(right(position));
         return snapshot;
+    }
+    /** Adds positions of the subtree rooted at Position p to the given snapshot. */
+    private void inorderSubtree(Position<E> position, List<Position<E>> snapshot) {
+        if (left(position) != null)
+            inorderSubtree(left(position), snapshot);
+        snapshot.add(position);
+        if (right(position) != null)
+            inorderSubtree(right(position), snapshot);
+    }
+
+    /** Returns an iterable collection of positions of the tree, 'inorder' order */
+    public Iterable<Position<E>> inorder() {
+        List<Position<E>> snapshot = new ArrayList<>();
+        if (!isEmpty())
+            inorderSubtree(root(), snapshot);
+        return snapshot;
+    }
+
+    /** Overrides positions to make 'inorder' the default order for binary trees */
+    public Iterable<Position<E>> positions() {
+        return inorder();
     }
 }

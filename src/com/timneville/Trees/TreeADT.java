@@ -7,6 +7,9 @@ import java.util.Iterator;
 /**
  * Created by timneville on 23/8/17.
  */
+
+/** TreeADT declares accessor and utility methods of a Tree */
+
 public interface TreeADT<E> extends Iterable<E> {
     Position<E> root();
 

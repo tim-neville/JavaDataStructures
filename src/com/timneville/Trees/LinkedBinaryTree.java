@@ -3,6 +3,7 @@ package com.timneville.Trees;
 import com.timneville.Lists.Position;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by timneville on 30/8/17.
@@ -13,18 +14,16 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
     public LinkedBinaryTree() {}
 
-    /** Factory Function to create a new node storing element*/
+    /** Factory Function to create a new node storing an element*/
     protected Node<E> createNode(E element, Node<E> parent, Node<E> leftChild, Node<E> rightChild) {
         return new Node<E>(element, parent, leftChild, rightChild);
     }
 
-    //NON PUBLIC UTILITY METHOD
     /** Validates the position and returns it as a node. */
     protected Node<E> validate(Position<E> position) throws IllegalArgumentException {
         if (!(position instanceof Node)) {
             throw new IllegalArgumentException("Not valid position type");
         }
-
         Node<E> node = (Node<E>) position;
 
         if (node.getParent() == node) {     //convention for a defunct node is when parent is set to itself.
@@ -85,9 +84,9 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     /** Replaces element at position with new element and returns the old element */
     public E setElement(Position<E> position, E element) throws IllegalArgumentException {
         Node<E> node = validate(position);
-        E removedElement = node.getElement();
+        E priorElement = node.getElement();
         node.setElement(element);
-        return removedElement;
+        return priorElement;
     }
 
     /** Attaches trees as left and right subtrees of external leaf position */
@@ -135,7 +134,11 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         return removedElement;
     }
 
-    Iterator<E> iterator() { return new ElementIterator(); };
+    /** Iterator based on the positions of the tree */
+    public Iterator<E> iterator() { return new ElementIterator(); }
+
+    /** Preorder as the default traversal algorithm for producing an iterable container of positions */
+    public Iterable<Position<E>> positions() { return preorder(); }
 
     //------Nested ElementIterator class
     private class ElementIterator implements Iterator<E> {
